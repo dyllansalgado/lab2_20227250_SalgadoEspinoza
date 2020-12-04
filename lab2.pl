@@ -325,7 +325,19 @@ stackRegister( Stack , NombreUsuario , PassUsuario , Stack2 ):-
 	append( UsuarioS , [ [ NombreUsuario , PassUsuario , 0 ] ], Usuarios2 ),
 	Stack2 = [ Usuarios2 , Preguntas , Respuestas , UsuarioActivo ].
 
-
+%Reglas
+% Entrada: -
+% Salida: -
+% Descripcion: -
+usuario([ "Dyllan" , "123" , 0 ]).
+usuario([ "Ignacio" , "456" , 0 ]).
+usuario([ "Salgado" , "789" , 0 ]).
+usuario([ "Espinoza" , "abc" , 0 ]).
+preguntas([ 1 , "lunes" , "holaquetal?" , [ "c" , "c++"] , "Dyllan" , 0 ]).
+preguntas([ 2 , "martes" , "holaestasbien?" , [ "c++" , "c"] , "Dyllan" , 0 ]).
+preguntas([ 1 , "miercoles" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ]).
+preguntas([ 1 , "jueves" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ]).
+preguntas([ 1 , "viernes" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ]).
 
 
 
