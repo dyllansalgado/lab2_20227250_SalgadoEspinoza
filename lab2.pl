@@ -15,24 +15,20 @@ crearStack( StackSalida ):-StackSalida = [ [] , [] , [] , [] ].
 % Descripcion: Cada pertenencia comprueba que se entregue el dato de su tipo.
 
 %Pertenencia Stack
-pertenenciaStack( Stack ):-
-	obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsuarios( UsuarioS ) ,
+pertenenciaStack( Stack ):-obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsuarios( UsuarioS ) ,
 	obtenerPreguntaS( Stack , PreguntaS ) , pertenenciaPreguntas( PreguntaS ) ,
 	obtenerRespuestaS( Stack , RespuestaS ) , pertenenciaRespuestas( RespuestaS ) ,
 	obtenerActivo( Stack , UsuarioActivo ) , pertenenciaUsuarioActivo( UsuarioActivo ).
 
-
 %Pertenencia Usuario
 pertenenciaUsuarios( [] ).
-pertenenciaUsuarios( [ Cabeza | Cola] ):-is_list( Cabeza ) ,
-	obtenerUsuario( Cabeza , NombreUsuario ) , string( NombreUsuario ) ,
+pertenenciaUsuarios( [ Cabeza | Cola] ):-is_list( Cabeza ) ,obtenerUsuario( Cabeza , NombreUsuario ) , string( NombreUsuario ) ,
 	obtenerPassUsuario( Cabeza , PassUsuario ) , string( PassUsuario ) ,
 	obtenerReputacionUsuario( Cabeza , ReputacionUsuario ) , number( ReputacionUsuario ) ,
 	pertenenciaUsuarios( Cola ).
 %Pertenencia Preguntas
 pertenenciaPreguntas( [] ).
-pertenenciaPreguntas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,
-	obtenerIDPregunta( Cabeza , IDPreguntas ) , number( IDPreguntas ) ,
+pertenenciaPreguntas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,obtenerIDPregunta( Cabeza , IDPreguntas ) , number( IDPreguntas ) ,
 	obtenerFechaPregunta( Cabeza , FechaPreguntas ) , string( FechaPreguntas ) ,
 	obtenerContenidoPregunta( Cabeza , ContenidoPreguntas ) , string( ContenidoPreguntas ) ,
 	obtenerEtiquetasPregunta( Cabeza , Etiquetas ) , is_list( Etiquetas ) ,
@@ -41,8 +37,7 @@ pertenenciaPreguntas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,
 
 %Pertenencia Respuestas
 pertenenciaRespuestas( [] ).
-pertenenciaRespuestas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,
-	obtenerID1Respuesta( Cabeza , ID1Respuestas ) , number( ID1Respuestas ) ,
+pertenenciaRespuestas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,obtenerID1Respuesta( Cabeza , ID1Respuestas ) , number( ID1Respuestas ) ,
 	obtenerFechaRespuesta( Cabeza , FechaRespuestas ) , string( FechaRespuestas ) ,
 	obtenerID2Respuesta( Cabeza , ID2Respuestas ) , number( ID2Respuestas ) ,
 	obtenerContenidoRespuesta( Cabeza , ContenidoRepuesta ) , string( ContenidoRepuesta ) ,
@@ -172,13 +167,9 @@ sacarPass( [ Cabeza | Cola ] , NombreUsuario , Pass ):-
 % Salida:
 % Descripcion:
 sacarPregunta( [] , _ , Pregunta ):-Pregunta = 1.
-sacarPregunta( [ Cabeza | _ ] , IDPregunta , Pregunta ):-
-	obtenerIDPregunta( Cabeza , IDPreguntaStack ),
-	IDPregunta == IDPreguntaStack,
+sacarPregunta( [ Cabeza | _ ] , IDPregunta , Pregunta ):-obtenerIDPregunta( Cabeza , IDPreguntaStack ),IDPregunta == IDPreguntaStack,
 	Pregunta = Cabeza.
-sacarPregunta( [ Cabeza | Cola ] , IDPregunta , Pregunta ):-
-	obtenerIDPregunta( Cabeza , IDPreguntaStack ),
-	not( IDPregunta == IDPreguntaStack ),
+sacarPregunta( [ Cabeza | Cola ] , IDPregunta , Pregunta ):-obtenerIDPregunta( Cabeza , IDPreguntaStack ),not( IDPregunta == IDPreguntaStack ),
 	sacarPregunta( Cola , IDPregunta , Pregunta ).
 
 %sacarRespuesta
@@ -186,13 +177,9 @@ sacarPregunta( [ Cabeza | Cola ] , IDPregunta , Pregunta ):-
 % Salida:
 % Descripcion:
 sacarRespuesta( [] , _ , Pregunta ):-Pregunta = 1.
-sacarRespuesta( [ Cabeza | _ ] , IDRespuesta , Respuesta ):-
-	obtenerID2Respuesta( Cabeza , IDRespuestaStack ),
-	IDRespuesta == IDRespuestaStack,
+sacarRespuesta( [ Cabeza | _ ] , IDRespuesta , Respuesta ):-obtenerID2Respuesta( Cabeza , IDRespuestaStack ),IDRespuesta == IDRespuestaStack,
 	Respuesta = Cabeza.
-sacarRespuesta( [ Cabeza | Cola ] , IDRespuesta , Pregunta ):-
-	obtenerID2Respuesta( Cabeza , IDRespuestaStack ),
-	not( IDRespuesta == IDRespuestaStack ),
+sacarRespuesta( [ Cabeza | Cola ] , IDRespuesta , Pregunta ):-obtenerID2Respuesta( Cabeza , IDRespuestaStack ),not( IDRespuesta == IDRespuestaStack ),
 	sacarRespuesta( Cola , IDRespuesta , Pregunta ).
 
 %PreguntasNuevas
@@ -200,14 +187,10 @@ sacarRespuesta( [ Cabeza | Cola ] , IDRespuesta , Pregunta ):-
 % Salida:
 % Descripcion:
 preguntaNueva( [] , _ , _ , Lista , Salida ):-Salida = Lista.	
-preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-
-	obtenerIDPregunta( Cabeza , IdPreguntaAux ),
-	IdPreguntaAux == IdPregunta,
+preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-obtenerIDPregunta( Cabeza , IdPreguntaAux ),IdPreguntaAux == IdPregunta,
 	append( [Pregunta] , Lista , ListaConPregunta ),
 	preguntaNueva( Cola , IdPregunta , Pregunta , ListaConPregunta , Salida ).
-preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-
-	obtenerIDPregunta( Cabeza , IdPreguntaAux ),
-	not( IdPreguntaAux == IdPregunta ),
+preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-obtenerIDPregunta( Cabeza , IdPreguntaAux ),not( IdPreguntaAux == IdPregunta ),
 	append( [Cabeza] , Lista , ListaConPregunta ),
 	preguntaNueva( Cola , IdPregunta , Pregunta , ListaConPregunta , Salida).
 
@@ -216,13 +199,11 @@ preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-
 % Salida:
 % Descripcion:
 usuariosNuevo( [ ] , _ , _ , Lista , Salida ):-Salida = Lista.
-usuariosNuevo( [ Cabeza | Cola ] , NombreUsuario , UsuarioNuevo , Lista , Salida ):-
-	obtenerUsuario( Cabeza , NombreUsuarioAux ),
+usuariosNuevo( [ Cabeza | Cola ] , NombreUsuario , UsuarioNuevo , Lista , Salida ):-obtenerUsuario( Cabeza , NombreUsuarioAux ),
 	NombreUsuarioAux == NombreUsuario,
 	append( [UsuarioNuevo] , Lista , ListaConUsuario ),
 	usuariosNuevo( Cola , NombreUsuario , UsuarioNuevo , ListaConUsuario , Salida ).	
-usuariosNuevo( [ Cabeza | Cola ] , NombreUsuario , UsuarioNuevo , Lista , Salida ):-
-	obtenerUsuario( Cabeza , NombreUsuarioAux ),
+usuariosNuevo( [ Cabeza | Cola ] , NombreUsuario , UsuarioNuevo , Lista , Salida ):-obtenerUsuario( Cabeza , NombreUsuarioAux ),
 	not( NombreUsuarioAux == NombreUsuario ),
 	append( [Cabeza] , Lista , ListaConUsuario ),
 	usuariosNuevo( Cola , NombreUsuario , UsuarioNuevo , ListaConUsuario , Salida ).
@@ -306,6 +287,13 @@ formatoListas( Lista , [ Cabeza | Cola ] , Salida ):-not( is_list( Cabeza ) ),ap
 	formatoListas( Salida1 , Cola , Salida ).
 		
 %FUNCIONES
+%Reglas
+
+% Entrada: -
+% Salida: -
+% Descripcion: -
+stack2([ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "hoy" , "asd" , [ "asdasd" , "asdasdasd"] , "Dyllan" , 0 ] , [ 2 , "manana" , "qwe" , [ "qweqwe" , "qweqweqwe"] , "Salgado" , 0 ] , [ 3 , "futuro" , "zxc" , [ "zxczx" , "zxczxczxc"] , "Dyllan" , 0 ] ] , [ [ 1 , "hoy" , 3 , "asd" , [ "asdasd" , "asdasdasd"] , "Dyllan" ] ] , [ "Dyllan" , "123" ] ]).
+
 %stackRegister
 % Entrada:
 % Salida:
@@ -324,33 +312,20 @@ stackRegister( Stack , NombreUsuario , PassUsuario , Stack2 ):-
 	obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),
 	append( UsuarioS , [ [ NombreUsuario , PassUsuario , 0 ] ], Usuarios2 ),
 	Stack2 = [ Usuarios2 , Preguntas , Respuestas , UsuarioActivo ].
-
-
-%Reglas
-
+%stackLogin
 % Entrada: -
 % Salida: -
 % Descripcion: -
-usuario([ "Dyllan" , "123" , 0 ]).
-usuario([ "Ignacio" , "456" , 0 ]).
-usuario([ "Salgado" , "789" , 0 ]).
-usuario([ "Espinoza" , "abc" , 0 ]).
-preguntas([ 1 , "lunes" , "holaquetal?" , [ "c" , "c++"] , "Dyllan" , 0 ]).
-preguntas([ 2 , "martes" , "holaestasbien?" , [ "c++" , "c"] , "Dyllan" , 0 ]).
-preguntas([ 3 , "miercoles" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ]).
-preguntas([ 4 , "jueves" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ]).
-preguntas([ 5 , "viernes" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ]).
+stackLogin( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
+	sacarPass( UsuarioS , NombreUsuario , Pass ),Pass = 1,Stack2 = 1.
+stackLogin( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
+	sacarPass( UsuarioS , NombreUsuario , Pass ),not( Pass == 1 ),Pass == PassUsuario,obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ),
+	Stack2 = [ UsuarioS , Preguntas , Respuestas , [ NombreUsuario , PassUsuario ] ].
+stackLogin( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
+	sacarPass( UsuarioS , NombreUsuario , Pass ),not( Pass == 1 ),not( Pass == PassUsuario ),Stack2 = 1.
 
-respuestas([ [ 1 , "lunes" , 1 , "respuestaAdyllan1" , [ "tamal" , "malo"] , "Ignacio" ] ]).
-respuestas([ [ 2 , "martes" , 1 , "respuestaAdyllan2" , [ "tabien" , "buenardo"] , "Espinoza" ] ]).
-respuestas([ [ 3 , "miercoles" , 1 , "respuestaAdyllan3" , [ "hola" , "hola1"] , "Dyllan" ] ]).
-respuestas([ [ 1 , "lunes" , 2 , "respuestaAdyllan1.1" , [ "hola2" , "hola3"] , "Salgado" ] ]).
-respuestas([ [ 2 , "miercoles" , 2 , "respuestaAdyllan2.1" , [ "hola4" , "hola5"] , "Espinoza" ] ]).
-respuestas([ [ 3 , "miercoles" , 2 , "respuestaAdyllan3.1" , [ "hola6" , "hola7"] , "Ignacio" ] ]).
-respuestas([ [ 1 , "miercoles" , 3 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ] ]).
-respuestas([ [ 1 , "miercoles" , 4 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ] ]).
-respuestas([ [ 1 , "miercoles" , 5 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ] ]).
-respuestas([ [ 2 , "miercoles" , 5 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ] ]).
+
+
 
 
 
