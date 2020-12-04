@@ -337,70 +337,16 @@ ask( Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2 ):-string( Fecha ) 
 	not( UsuarioActivo == [] ),obtenerNombreActivo( UsuarioActivo , NombreActivo ),obtenerUsuarioS( Stack , Usuarios ) , obtenerPreguntaS( Stack , Preguntas ) ,
 	obtenerRespuestaS( Stack , Respuestas ),contarPreguntasRespuestas( Preguntas , 0 , Salida),ID is (Salida+1),
 	append( Preguntas , [[ ID , Fecha , TextoPregunta , ListaEtiquetas , NombreActivo , 0 ]] , Preguntas2 ),Stack2 = [ Usuarios , Preguntas2 , Respuestas , UsuarioActivo ].
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%Pertenencias
-
-usuario("pedro","1234").
-
-agregarArticulo(L,Articulo,[Articulo,L]).
-
-
-%selectores.
-/*stackGetUsuarios([Usuarios,Preguntas,Etiquetas],Usuarios).*/
-
-
-/*agregarUsuario(Usuario,ListaEntrada,ListaSalida):-
-    nth0(0,ListaEntrada,UsuariosAntiguos),
-    Lista*/
-
+	
+%answer
+% Entrada: -
+% Salida: -
+% Descripcion: -
+answer( Stack , _ , _ , _ , _ , Stack2 ):-obtenerActivo( Stack , Activo ),Activo == [],Stack2 = 1.
+answer( Stack , _ , IdPregunta , _ , _ , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePreguntaRespuesta( Preguntas , IdPregunta , Existe ),Existe == 1,Stack2 = 1.
+answer( Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePreguntaRespuesta( Preguntas , IdPregunta , Existe ),Existe == 0,
+	obtenerUsuarioS( Stack , Usuarios ) , obtenerRespuestaS( Stack , Respuestas ) ,contarPreguntasRespuestas( Respuestas , 0 ,Cantidad ),ID is ( Cantidad + 1 ),
+	obtenerNombreActivo( Activo , NombreActivo ),append( Respuestas , [[ IdPregunta , Fecha , ID , TextoRespuesta , ListaEtiquetas , NombreActivo ]] , Respuestas2 ),
+	Stack2 = [ Usuarios , Preguntas , Respuestas2 , Activo ],!.
