@@ -325,7 +325,9 @@ stackRegister( Stack , NombreUsuario , PassUsuario , Stack2 ):-
 	append( UsuarioS , [ [ NombreUsuario , PassUsuario , 0 ] ], Usuarios2 ),
 	Stack2 = [ Usuarios2 , Preguntas , Respuestas , UsuarioActivo ].
 
+
 %Reglas
+
 % Entrada: -
 % Salida: -
 % Descripcion: -
@@ -335,9 +337,20 @@ usuario([ "Salgado" , "789" , 0 ]).
 usuario([ "Espinoza" , "abc" , 0 ]).
 preguntas([ 1 , "lunes" , "holaquetal?" , [ "c" , "c++"] , "Dyllan" , 0 ]).
 preguntas([ 2 , "martes" , "holaestasbien?" , [ "c++" , "c"] , "Dyllan" , 0 ]).
-preguntas([ 1 , "miercoles" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ]).
-preguntas([ 1 , "jueves" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ]).
-preguntas([ 1 , "viernes" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ]).
+preguntas([ 3 , "miercoles" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ]).
+preguntas([ 4 , "jueves" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ]).
+preguntas([ 5 , "viernes" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ]).
+
+respuestas([ [ 1 , "lunes" , 1 , "respuestaAdyllan1" , [ "tamal" , "malo"] , "Ignacio" ] ]).
+respuestas([ [ 2 , "martes" , 1 , "respuestaAdyllan2" , [ "tabien" , "buenardo"] , "Espinoza" ] ]).
+respuestas([ [ 3 , "miercoles" , 1 , "respuestaAdyllan3" , [ "hola" , "hola1"] , "Dyllan" ] ]).
+respuestas([ [ 1 , "lunes" , 2 , "respuestaAdyllan1.1" , [ "hola2" , "hola3"] , "Salgado" ] ]).
+respuestas([ [ 2 , "miercoles" , 2 , "respuestaAdyllan2.1" , [ "hola4" , "hola5"] , "Espinoza" ] ]).
+respuestas([ [ 3 , "miercoles" , 2 , "respuestaAdyllan3.1" , [ "hola6" , "hola7"] , "Ignacio" ] ]).
+respuestas([ [ 1 , "miercoles" , 3 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ] ]).
+respuestas([ [ 1 , "miercoles" , 4 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ] ]).
+respuestas([ [ 1 , "miercoles" , 5 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ] ]).
+respuestas([ [ 2 , "miercoles" , 5 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ] ]).
 
 
 
