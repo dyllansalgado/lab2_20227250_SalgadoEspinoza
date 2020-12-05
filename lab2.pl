@@ -325,6 +325,7 @@ listaString( String , [] , Salida ):-Salida = String.
 listaString( String , [ Cabeza | Cola ] , Salida ):-string_concat(String, Cabeza, Salida1), string_concat(Salida1, " , ", Salida2),listaString( Salida2 , Cola , Salida ).
 
 %FUNCIONES OBLIGATORIAS
+%EJEMPLOS DE ESTAS FUNCIONES SE ENCUENTRAN AL FINAL.
 %Entrada: Un stack con 4 usuarios, 5 preguntas y 10 respuestas.
 %Salida: El stack con el que se trabaja.
 %Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
@@ -341,9 +342,9 @@ stack1([ [ [ "Dyllan" , "123" , 0 ] , [ "Ignacio" , "456" , 0 ],[ "Salgado" , "7
 stack2([ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "29-11-2020" , "Pregunta1Dyll" , [ "Anime" , "Goku"] , "Dyllan" , 0 ] , [ 2 , "30-11-2020" , "pregunta2Salg" , [ "Garen" , "Yasuo"] , "Salgado" , 0 ] , [ 3 , "01-12-2020" , "pregunta3Dyll" , [ "Videos" , "Musica"] , "Dyllan" , 0 ] ] , [ [ 2 , "01-12-2020" , 1 , "RespondeDyllanASalgado" , [ "Anime" , "DragonBallZ"] , "Dyllan" ] ] , [] ]).
 
 %stackRegister
-% Entrada: -
-% Salida: -
-%Descripcion: - 
+% Entrada: recibe al stack , nombre de usuario y pass de usuario.
+% Salida: Stack con  usuarios registrados.
+% Descripcion: Predicado para registrar un usuario. Si el usuario no se encuentra registrado, se ingresara al stack pero si ya se encuentra un usuario con mismo nombre retorna un falso.  
 stackRegister( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
 	existeUsuario( UsuarioS , NombreUsuario , Existe ),Existe == true,Stack2 = Stack,!,fail.
 stackRegister( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
@@ -352,11 +353,11 @@ stackRegister( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsu
 	append( UsuarioS , [ [ NombreUsuario , PassUsuario , 0 ] ], Usuarios2 ),Stack2 = [ Usuarios2 , Preguntas , Respuestas , UsuarioActivo ].
 
 %stackLogin
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: recibe el stack, se ingresa nombre de usuario, y pass.
+% Salida: Stack con usuario logeado.
+% Descripcion: Predicado para logear un usuario. Si el usuario no se encuentra en el stack o se a equivocado en la clave, entregara un false.
 stackLogin( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
-	sacarPass( UsuarioS , NombreUsuario , Pass ),Pass = false,Stack2 = false.
+	sacarPass( UsuarioS , NombreUsuario , Pass ),Pass = false,Stack2 = false,!,fail.
 stackLogin( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuario ) , string( PassUsuario ),obtenerUsuarioS( Stack , UsuarioS ),
 	sacarPass( UsuarioS , NombreUsuario , Pass ),not( Pass == false ),Pass == PassUsuario,obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ),
 	Stack2 = [ UsuarioS , Preguntas , Respuestas , [ NombreUsuario , PassUsuario ] ].
@@ -364,9 +365,9 @@ stackLogin( Stack , NombreUsuario , PassUsuario , Stack2 ):-string( NombreUsuari
 	sacarPass( UsuarioS , NombreUsuario , Pass ),not( Pass == false ),not( Pass == PassUsuario ),Stack2 = false,!,fail.
 
 %ask
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: recibe el stack, fecha, texto de la pregunta, una lista de etiquetas.
+% Salida: stack con pregunta realizada.
+% Descripcion: debe estar logueado un usuario para poder realizar una pregunta, nos permite generar preguntas que se tendran en nuestro stack.
 ask( Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2):-string( Fecha ) , string( TextoPregunta ) , is_list( ListaEtiquetas ) ,obtenerActivo( Stack , UsuarioActivo ) ,
 	UsuarioActivo == [],Stack2 = false,!,fail.
 ask( Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2 ):-string( Fecha ) , string( TextoPregunta ) , is_list( ListaEtiquetas ) ,obtenerActivo( Stack , UsuarioActivo ) ,
@@ -375,40 +376,36 @@ ask( Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2 ):-string( Fecha ) 
 	append( Preguntas , [[ ID , Fecha , TextoPregunta , ListaEtiquetas , NombreActivo , 0 ]] , Preguntas2 ),Stack2 = [ Usuarios , Preguntas2 , Respuestas , [] ].
 
 %answer
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: Recibe el stack,la fecha, id a pregunta responder, la respuesta, lista de etiquetas.
+% Salida: respuesta formulada para una respuesta con id
+% Descripcion: Nos permite responder una pregunta con su id.
 answer( Stack , _ , _ , _ , _ , Stack2 ):-obtenerActivo( Stack , Activo ),Activo == [],Stack2 = false, !,fail.
 answer( Stack , _ , IdPregunta , _ , _ , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , Existe ),Existe == false,Stack2 = false,!,fail.
 answer( Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
-existePregunta( Preguntas , IdPregunta , Existe ),Existe == true,
+    existePregunta( Preguntas , IdPregunta , Existe ),Existe == true,
 	obtenerUsuarioS( Stack , Usuarios ) , obtenerRespuestaS( Stack , Respuestas ) ,contarPreguntasRespuestas( Respuestas , 0 ,Cantidad ),ID is ( Cantidad + 1 ),
 	obtenerNombreActivo( Activo , NombreActivo ),append( Respuestas , [[ IdPregunta , Fecha , ID , TextoRespuesta , ListaEtiquetas , NombreActivo ]] , Respuestas2 ),!,
 	Stack2 = [ Usuarios , Preguntas , Respuestas2 , []].
 
 %accept
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: Stack id de pregunta, id de respuesta.
+% Salida: respuesta aceptada para una pregunta, se añaden puntajes a quien respondio y a quien creo la pregunta.
+% Descripcion: Predicado que nos permite aceptar respuestas de preguntas, solo el usuario que genera pregunta puede aceptar las respuestas.
 accept( Stack , _ , _ , Stack2 ):-
 	obtenerActivo( Stack , Activo ),Activo == [],Stack2 = false,!,fail.
-
 accept( Stack , IdPregunta , _ , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == false,!,Stack2 = false.
-
 accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
 	obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerRespuestaS( Stack , Respuestas ),
 	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == false,!,Stack2 = false.	
-
 accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
 	obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,
 	obtenerRespuestaS( Stack , Respuestas ),existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == true,
 	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),
 	obtenerUsuarioS( Stack , Usuarios ),existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == false,!,Stack2 = false.
-
 accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
 	obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerRespuestaS( Stack , Respuestas ),
@@ -429,9 +426,9 @@ accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
 	preguntaNueva( Preguntas , IdPregunta , Pregunta2 , [] , Preguntas2 ),Stack2 = [ Usuarios3 , Preguntas2 , Respuestas , [] ].
 
 %stackToString
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: Todo el stack
+% Salida: stack como string
+% Descripcion: Nos permite transformar todo nuestro stack como si fuera un string.
 stackToString( Stack , StackStr ):-
 	perteneceAStack( Stack ),
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),UsuarioActivo == [],
@@ -446,7 +443,6 @@ stackToString( Stack , StackStr ):-
 	formatoListas( [] , Salida14 , Salida15 ),
 	atomics_to_string( Salida15 , StackAsString ),
 	StackStr = StackAsString.
-
 stackToString( Stack , StackStr ):-
 	perteneceAStack( Stack ),
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),
@@ -463,3 +459,34 @@ stackToString( Stack , StackStr ):-
 	formatoListas( [] , Salida16 , Salida17 ),
 	atomics_to_string(Salida17, StackAsString),
 	StackStr = StackAsString.
+
+%EJEMPLOS:
+%stackRegister:
+%1)
+%2)
+%3)
+
+%stackLogin:
+%1)
+%2)
+%3)
+
+%ask:
+%1)
+%2)
+%3)
+
+%answer:
+%1)
+%2)
+%3)
+
+%accept:
+%1)
+%2)
+%3)
+
+%stackToString:
+%1)
+%2)
+%3)
