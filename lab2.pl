@@ -6,23 +6,17 @@
 % Entrada: Ninguna entrada.
 % Salida: Representacion del stack utilizado
 % Descripcion: Crea la representacion del stack, usando listas vacias.
+% Ejemplo: crearStack(Stack1).
 crearStack( StackSalida ):- StackSalida = [ [] , [] , [] , [] ].
 
 %PERTENENCIA
-
-%Pertenencia Stack
-% Entrada: Se ingresa el stack.
-% Salida: boleano.
-% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
-pertenenciaStack( Stack ):- obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsuarios( UsuarioS ) ,
-	obtenerPreguntaS( Stack , PreguntaS ) , pertenenciaPreguntas( PreguntaS ) ,
-	obtenerRespuestaS( Stack , RespuestaS ) , pertenenciaRespuestas( RespuestaS ) ,
-	obtenerActivo( Stack , UsuarioActivo ) , pertenenciaUsuarioActivo( UsuarioActivo ).
 
 %Pertenencia Usuario.
 % Entrada: Se ingresa un usuario.
 % Salida: boleano.
 % Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaUsuarios( [ [ "Dyllan" , "123" , 0 ] ] ).
+% pertenenciaUsuarios( [ [ hola , "123" , h ] ] ).
 pertenenciaUsuarios( [] ).
 pertenenciaUsuarios( [ Cabeza | Cola] ):- is_list( Cabeza ) , obtenerUsuario( Cabeza , NombreUsuario ) , string( NombreUsuario ) ,
 	obtenerPassUsuario( Cabeza , PassUsuario ) ,string( PassUsuario ) ,obtenerReputacionUsuario( Cabeza , ReputacionUsuario ) , number( ReputacionUsuario ) ,
@@ -32,6 +26,8 @@ pertenenciaUsuarios( [ Cabeza | Cola] ):- is_list( Cabeza ) , obtenerUsuario( Ca
 % Entrada: Se ingresan preguntas.
 % Salida: boleano.
 % Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaPreguntas( [ [ 1 , "01-12-2020" , "Mi pregunta" , [ "Prolog" , "C#"] , "Dyllan" , 0 ] ] ).
+% pertenenciaPreguntas( [ [ 1 , "01-12-2020" , "Mi pregunta" , [ "Prolog" , "C#"] , 123 , 0 ] ] ).
 pertenenciaPreguntas( [] ).
 pertenenciaPreguntas( [ Cabeza | Cola ] ):- is_list( Cabeza ) , obtenerIDPregunta( Cabeza , IDPreguntas ) , number( IDPreguntas ) ,
 	obtenerFechaPregunta( Cabeza , FechaPreguntas ) , string( FechaPreguntas ) ,obtenerContenidoPregunta( Cabeza , ContenidoPreguntas ) , string( ContenidoPreguntas ) ,
@@ -42,6 +38,8 @@ pertenenciaPreguntas( [ Cabeza | Cola ] ):- is_list( Cabeza ) , obtenerIDPregunt
 % Entrada: Se ingresan respuestas.
 % Salida: boleano.
 % Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaRespuestas( [ [ 1 , "01-12-2020" , 1 , "Mi respuesta" , [ "hola" , "holas"] , "Dyllan" ] ] ).
+% pertenenciaRespuestas( [ [ 1 , "01-12-2020" , 1 , 123 , [ "hola" , "holas"] , "Dyllan" ] ] ).
 pertenenciaRespuestas( [] ).
 pertenenciaRespuestas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,obtenerID1Respuesta( Cabeza , ID1Respuestas ) , number( ID1Respuestas ) ,
 	obtenerFechaRespuesta( Cabeza , FechaRespuestas ) , string( FechaRespuestas ) ,obtenerID2Respuesta( Cabeza , ID2Respuestas ) , number( ID2Respuestas ) ,
@@ -52,8 +50,21 @@ pertenenciaRespuestas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,obtenerID1Respues
 % Entrada: Se ingresan usuario activo.
 % Salida: boleano.
 % Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaUsuarioActivo( [ "Dyllan" , "123" ] ).
+% pertenenciaUsuarioActivo( [ "Dyllan" , 123 ] ).
 pertenenciaUsuarioActivo( [] ).
 pertenenciaUsuarioActivo( [ Cabeza | Cola]  ):-string( Cabeza ) , pertenenciaUsuarioActivo( Cola ).
+
+%Pertenencia Stack
+% Entrada: Se ingresa el stack.
+% Salida: boleano.
+% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: perteneceAStack([ [ [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "01-12-2020" , "Soy pregunta" , [ "pregunta" , "nel"] , "Dyllan" , 0 ] ]  , [] , [ "Dyllan" , "123" ] ]).
+% perteneceAStack([  "dyllan","123",0  , [ [ 1 , "01-12-2020" , "Soy pregunta" , [ "binario" , "nulo"] , "Dyllan" , 0 ] ]  , [] , [ "Dyllan" , "123" ] ]).
+perteneceAStack( Stack ):- obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsuarios( UsuarioS ) ,
+	obtenerPreguntaS( Stack , PreguntaS ) , pertenenciaPreguntas( PreguntaS ) ,
+	obtenerRespuestaS( Stack , RespuestaS ) , pertenenciaRespuestas( RespuestaS ) ,
+	obtenerActivo( Stack , UsuarioActivo ) , pertenenciaUsuarioActivo( UsuarioActivo ).
 
 %SELECTORES
 % Entrada: El elemento que se quiere seleccionar
@@ -116,8 +127,10 @@ obtenerPassActivo( [ _ , Password ] , Password ).
 
 %existeUsuario
 % Entrada: Un usuario.
-% Salida: Un boleano pero con nuestra representacion ,1 no existe 0 existe el usuario.
+% Salida: Un boleano con true o false, donde true es existe y false no existe.
 % Descripcion: Funcion que se utiliza para saber si un usuario existe en nuestro stack.
+% Ejemplo: existeUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllan" , Existe ).
+% existeUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllansasa" , Existe ).
 existeUsuario( [] , _ , Existe  ):-Existe = false.
 existeUsuario( [ Cabeza | _ ] , NombreUsuario , Existe ):-
 	obtenerUsuario( Cabeza , NombreUsuarioStack ) , NombreUsuarioStack == NombreUsuario , Existe = true.
@@ -128,6 +141,8 @@ existeUsuario( [ Cabeza | Cola ] , NombreUsuario , Existe ):-obtenerUsuario( Cab
 % Entrada: Una pregunta 
 % Salida: false o true si existe respuesta.
 % Descripcion: Se utiliza para saber si una pregunta existe.
+% Ejemplo: existePregunta([ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] , [ 2 , "02-12-2020" , "pregunta2" , [ "pregunta" , "pregunta2"] , "Salgado" , 0 ]], 1 ,Existe).
+% existePregunta([ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] , [ 2 , "02-12-2020" , "pregunta2" , [ "pregunta" , "pregunta2"] , "Salgado" , 0 ]], 3 ,Existe).
 existePregunta( [] , _ , Existe ):-Existe = false.
 existePregunta( [ Cabeza | _ ] , IDPreguntaRespuesta , Existe ):-
 	obtenerIDPregunta( Cabeza , IDPreguntaStack ) , 
@@ -140,6 +155,8 @@ existePregunta( [ Cabeza | Cola ] , IDPreguntaRespuesta , Existe ):-
 % Entrada: Respuesta
 % Salida: false o true si existe respuesta.
 % Descripcion: Se utiliza para saber si una respuesta existe.
+% Ejemplo: existeRespuesta([ [ 1 , "01-12-2020" , 1 , "respuestaXD" , [ "XD" , "DX"] , "Salgado" ] ], 1, Existe).
+% existeRespuesta([ [ 1 , "01-12-2020" , 1 , "RespuestaXD" , [ "XD" , "DX"] , "Salgado" ] ], 2, Existe).
 existeRespuesta( [] , _ , Existe ):-Existe=false.
 existeRespuesta( [ Cabeza | _ ] , IDRespuesta , Existe ):-
 	obtenerID2Respuesta( Cabeza , IDRespuestaStack ) , 
@@ -152,6 +169,8 @@ existeRespuesta( [ Cabeza | Cola ] , IDRespuesta , Existe ):-
 % Entrada: Preguntas o respuestas.
 % Salida: Cantidad de preguntas o respuestas.
 % Descripcion: Se utiliza para saber la cantidad de preguntas y respuestas que estan en nuestro stack.
+% contarPreguntasRespuestas( [ [ 1 , "01-12-2020" , 2 , "SoyRespuesta" , [ "XD" , "DX"] , "Dyllan" ] , [ 1 , "02-12-2020" , 2 , "SoyRespuesta2" , [ "Hola" , "Holi"] , "Dyllan" ] ] , 0 , Cantidad ).
+% contarPreguntasRespuestas( [ [ 1 , "01-12-2020" , 2 , "SoyRespuesta" , [ "XD" , "DX"] , "Dyllan" ] ] , 0 , Cantidad ).
 contarPreguntasRespuestas( [ _ | Cola ] , Cantidad , Salida ):-CantidadAux is ( Cantidad + 1) , contarPreguntasRespuestas( Cola , CantidadAux , Salida ).
 contarPreguntasRespuestas( [ ] , Cantidad , Salida ):-Salida = Cantidad.
 
@@ -160,6 +179,8 @@ contarPreguntasRespuestas( [ ] , Cantidad , Salida ):-Salida = Cantidad.
 % Entrada: Se ingresa el nombre de un usuario.
 % Salida: Si se encuentra nos entrega el usuario , si no devuelve un false.
 % Descripcion: Se utiliza para obtener un usuario.
+% Ejemplo: sacarUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllan" , Usuario ).
+% sacarUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "juanito" , Usuario ).
 sacarUsuario( [] , _ , Usuario ):-Usuario=false.
 sacarUsuario( [ Cabeza | _ ] , NombreUsuario , Usuario ):-obtenerUsuario( Cabeza , NombreUsuarioStack ) , NombreUsuarioStack == NombreUsuario , Usuario = Cabeza.
 sacarUsuario( [ Cabeza | Cola ] , NombreUsuario , Usuario ):-
@@ -167,8 +188,10 @@ sacarUsuario( [ Cabeza | Cola ] , NombreUsuario , Usuario ):-
 
 %sacarPass
 % Entrada: Se ingresa la pass de un usuario.
-% Salida: - Se obtiene la pass
-% Descripcion: - se utiliza para obtener la pass de un usuario y ver que calze con su nombre.
+% Salida: Se obtiene la pass
+% Descripcion: se utiliza para obtener la pass de un usuario y ver que calze con su nombre.
+% Ejemplo: sacarPass( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllan" , Pass ).
+% sacarPass( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "juanito" , Pass ).
 sacarPass( [] , _ , Pass ):- Pass=false.
 sacarPass( [ Cabeza | _ ] , NombreUsuario , Pass ):-
 	obtenerUsuario( Cabeza , NombreUsuarioStack ) , NombreUsuarioStack == NombreUsuario , obtenerPassUsuario( Cabeza , PassUsuario ) , Pass = PassUsuario.
@@ -179,6 +202,8 @@ sacarPass( [ Cabeza | _ ] , NombreUsuario , Pass ):-
 % Entrada: Se ingresa una pregunta.
 % Salida: Obtener la pregunta.
 % Descripcion: Es utilizada para obtener la pregunta por su id.
+% Ejemplo: sacarPregunta( [ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] ] , 1 , Pregunta ).
+% sacarPregunta( [ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] ] , 3 , Pregunta ).
 sacarPregunta( [] , _ , Pregunta ):-Pregunta=false.
 sacarPregunta( [ Cabeza | _ ] , IDPregunta , Pregunta ):-obtenerIDPregunta( Cabeza , IDPreguntaStack ) , IDPregunta == IDPreguntaStack , Pregunta = Cabeza.
 sacarPregunta( [ Cabeza | Cola ] , IDPregunta , Pregunta ):-obtenerIDPregunta( Cabeza , IDPreguntaStack ) , not( IDPregunta == IDPreguntaStack ) , 
@@ -188,6 +213,8 @@ sacarPregunta( [ Cabeza | Cola ] , IDPregunta , Pregunta ):-obtenerIDPregunta( C
 % Entrada: Se ingresa una respuesta.
 % Salida: Obtener la respuesta.
 % Descripcion: Es utilizada para obtener la respuesta por su id.
+% Ejemplo: sacarRespuesta( [ [ 1 , "01-12-2020" , 1 , "pregunta" , [ "lol" , "lmao"] , "Salgado" ] ] , 1 , Respuesta ).
+% sacarRespuesta( [ [ 1 , "01-12-2020" , 1 , "pregunta" , [ "lol" , "lmao"] , "Salgado" ] ] , 3 , Respuesta ).
 sacarRespuesta( [] , _ , RespuestaA ):-RespuestaA=false.
 sacarRespuesta( [ Cabeza | _ ] , IDRespuesta , Respuesta ):-
 	obtenerID2Respuesta( Cabeza , IDRespuestaStack ) , IDRespuesta == IDRespuestaStack , Respuesta = Cabeza.
@@ -198,6 +225,7 @@ sacarRespuesta( [ Cabeza | Cola ] , IDRespuesta , RespuestaA ):-
 % Entrada: Una pregunta
 % Salida: Una pregunta modificada.
 % Descripcion: Se utiliza para el accept para que cambia la respuesta a respondida.
+% Ejemplo: preguntaNueva( [ [ 1 , "01-12-2020" , "preguntaNoRespondida" , [ "Respondan" , "Awita"] , "Dyllan" , 0 ] ] , 1 , [ 1 , "02-12-2020" , "PreguntaRespondida" , [ "Respondan" , "Awita"] , "Salgado" , 1 ] , [] , PreguntaSalida ).
 preguntaNueva( [] , _ , _ , Lista , Salida ):-Salida = Lista.
 preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-obtenerIDPregunta( Cabeza , IdPreguntaAux ) , IdPreguntaAux == IdPregunta , 
 	append( [Pregunta] , Lista , ListaConPregunta ) , preguntaNueva( Cola , IdPregunta , Pregunta , ListaConPregunta , Salida ).
@@ -205,11 +233,11 @@ preguntaNueva( [ Cabeza | Cola ] , IdPregunta , Pregunta , Lista , Salida ):-
 	obtenerIDPregunta( Cabeza , IdPreguntaAux ) , not( IdPreguntaAux == IdPregunta ) , append( [Cabeza] , Lista , ListaConPregunta ) , 
 	preguntaNueva( Cola , IdPregunta , Pregunta , ListaConPregunta , Salida).
 
-
 %usuariosNuevo
 % Entrada: Un usuario
 % Salida: Un usuario modificado
 % Descripcion: Se utiliza para la funcion accept, para poder ingresar la reputacion al usuario.
+% Ejemplo: usuariosNuevo( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllan" , [ "Dyllan" , "123" , 15 ] , [] , Salida ).
 usuariosNuevo( [ ] , _ , _ , Lista , Salida ):-Salida = Lista.
 usuariosNuevo( [ Cabeza | Cola ] , NombreUsuario , UsuarioNuevo , Lista , Salida ):-obtenerUsuario( Cabeza , NombreUsuarioAux ) , 
 	NombreUsuarioAux == NombreUsuario , append( [UsuarioNuevo] , Lista , ListaConUsuario ) , usuariosNuevo( Cola , NombreUsuario , UsuarioNuevo , ListaConUsuario , Salida ).
@@ -227,7 +255,6 @@ agregaUsuarios( Lista , [ Cabeza | Cola ] , Salida ):-
 	append( Salida4 , [". Reputacion: "] , Salida5 ) , obtenerReputacionUsuario( Cabeza , ReputacionUsuario ) , append( Salida5 , [ReputacionUsuario] , Salida6 ) , agregaUsuarios( Salida6 , Cola , Salida ).
 
 %agregaPreguntas
-
 % Entrada: Obtiene los datos de una pregunta.
 % Salida: Datos de pregunta.
 % Descripcion: Se utiliza para realizar el stackToString, para añadir sus datos y que sean impresos.
@@ -273,9 +300,9 @@ agregaUsuariosActivo( Lista , Usuario , Salida ):-
 	Salida = Salida4.
 
 %filtroPreguntas
-% Entrada: 
-% Salida: 
-% Descripcion: 
+% Entrada: Lista con preguntas y nombre de quien las escribio.
+% Salida: Todas sus preguntas.
+% Descripcion: Se utiliza para encontrar todas las preguntas de un usuario.
 filtroPreguntas( [] , _ , Lista , Salida ):-Salida = Lista.
 filtroPreguntas( [ Cabeza | Cola ] , NombreUsuario , Lista , Salida ):-obtenerAutorPregunta( Cabeza , Nombre ) ,Nombre == NombreUsuario,
 	append( [Cabeza] , Lista , ListaConPreguntadasFiltradas ),filtroPreguntas( Cola , NombreUsuario , ListaConPreguntadasFiltradas , Salida ).
@@ -283,36 +310,35 @@ filtroPreguntas( [ Cabeza | Cola ] , NombreUsuario , Lista , Salida ):-obtenerAu
 	filtroPreguntas( Cola , NombreUsuario , Lista , Salida ).
 
 %formatoListas
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: Una lista
+% Salida: Nos entrega una lista.
+% Descripcion: Se utiliza para la funcion stack to string para poder realizar la impresion de la lista de listas.
 formatoListas( Lista , [] , Salida ):-Salida = Lista.
 formatoListas( Lista , [ Cabeza | Cola ] , Salida ):-is_list( Cabeza ),listaString( "" , Cabeza , Salida1 ),append( Lista , [Salida1] , Salida2 ),formatoListas( Salida2 , Cola , Salida ).
 formatoListas( Lista , [ Cabeza | Cola ] , Salida ):-not( is_list( Cabeza ) ),append( Lista , [Cabeza] , Salida1 ),formatoListas( Salida1 , Cola , Salida ).
 
 %listaString
-% Entrada: -
-% Salida: -
-% Descripcion: -
+% Entrada: Un string
+% Salida: lista de string concatenados.
+% Descripcion: Se utliza en la funcion stack to string para concatenar los string.
 listaString( String , [] , Salida ):-Salida = String.
 listaString( String , [ Cabeza | Cola ] , Salida ):-string_concat(String, Cabeza, Salida1), string_concat(Salida1, " , ", Salida2),listaString( Salida2 , Cola , Salida ).
 
 %FUNCIONES OBLIGATORIAS
-%Hechos: -
-%Entrada: -
-%Salida: -
-%Descripcion: - id relacionada con respuesta
+%Entrada: Un stack con 4 usuarios, 5 preguntas y 10 respuestas.
+%Salida: El stack con el que se trabaja.
+%Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
 stack1([ [ [ "Dyllan" , "123" , 0 ] , [ "Ignacio" , "456" , 0 ],[ "Salgado" , "789" , 0 ], [ "Espinoza" , "abc" , 0 ] ] , 
-
 	[ [ 1 , "27-11-2020" , "holaquetal?" , [ "c" , "c++"] , "Dyllan" , 0 ] , [ 2 , "27-11-2020" , "holaestasbien?" , [ "c++" , "c"] , "Dyllan" , 0 ] , [ 3 , "28-11-2020" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ],
     [ 4 , "29-11-2020" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ],[ 5 , "30-11-2020" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ] ] , 
     [ [ 1 , "30-11-2020" , 1 , "respuestaAdyllan1" , [ "tamal" , "malo"] , "Ignacio" ], [ 1 , "30-11-2020" , 2 , "respuestaAdyllan2" , [ "tabien" , "buenardo"] , "Espinoza" ], [ 1 , "01-12-2020" , 3 , "respuestaAdyllan3" , [ "hola" , "hola1"] , "Espinoza" ],
     [ 1 , "01-12-2020" , 4 , "respuestaAdyllan1.1" , [ "hola2" , "hola3"] , "Salgado" ], [ 2 , "02-12-2020" , 5 , "respuestaAdyllan2.1" , [ "hola4" , "hola5"] , "Espinoza" ],
     [ 3 , "02-12-2020" , 6 , "respuestaAdyllan3.1" , [ "hola6" , "hola7"] , "Ignacio" ],[ 3 , "02-12-2020" , 7 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ],
     [ 1 , "03-12-2020" , 8 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ],[ 1 , "03-12-2020" , 9 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ],[ 2 , "03-12-2020" , 10 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ]],[]]).
-
+%Entrada: Un stack con 2 usuarios, 3 preguntas y 1 respuesta.
+%Salida: El stack con el que se trabaja.
+%Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
 stack2([ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "29-11-2020" , "Pregunta1Dyll" , [ "Anime" , "Goku"] , "Dyllan" , 0 ] , [ 2 , "30-11-2020" , "pregunta2Salg" , [ "Garen" , "Yasuo"] , "Salgado" , 0 ] , [ 3 , "01-12-2020" , "pregunta3Dyll" , [ "Videos" , "Musica"] , "Dyllan" , 0 ] ] , [ [ 2 , "01-12-2020" , 1 , "RespondeDyllanASalgado" , [ "Anime" , "DragonBallZ"] , "Dyllan" ] ] , [] ]).
-
 
 %stackRegister
 % Entrada: -
@@ -407,7 +433,7 @@ accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
 % Salida: -
 % Descripcion: -
 stackToString( Stack , StackStr ):-
-	pertenenciaStack( Stack ),
+	perteneceAStack( Stack ),
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),UsuarioActivo == [],
 	append( [] , ["USUARIOS REGISTRADOS"] , Salida1 ) ,
 	agregaUsuarios( Salida1 , Autores , Salida2 ) , append( Salida2 , ["\n"] , Salida3 ), 
@@ -422,7 +448,7 @@ stackToString( Stack , StackStr ):-
 	StackStr = StackAsString.
 
 stackToString( Stack , StackStr ):-
-	pertenenciaStack( Stack ),
+	perteneceAStack( Stack ),
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),
 	not( UsuarioActivo == [] ), obtenerNombreActivo( UsuarioActivo , NombreActivo ),
 	filtroPreguntas( Preguntas , NombreActivo , [] , PreguntasFiltradas ),
