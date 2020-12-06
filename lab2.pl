@@ -9,64 +9,7 @@
 % Ejemplo: crearStack(Stack1).
 crearStack( StackSalida ):- StackSalida = [ [] , [] , [] , [] ].
 
-%PERTENENCIA
-
-%Pertenencia Usuario.
-% Entrada: Se ingresa un usuario.
-% Salida: boleano.
-% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
-% Ejemplo: pertenenciaUsuarios( [ [ "Dyllan" , "123" , 0 ] ] ).
-% pertenenciaUsuarios( [ [ hola , "123" , h ] ] ).
-pertenenciaUsuarios( [] ).
-pertenenciaUsuarios( [ Cabeza | Cola] ):- is_list( Cabeza ) , obtenerUsuario( Cabeza , NombreUsuario ) , string( NombreUsuario ) ,
-	obtenerPassUsuario( Cabeza , PassUsuario ) ,string( PassUsuario ) ,obtenerReputacionUsuario( Cabeza , ReputacionUsuario ) , number( ReputacionUsuario ) ,
-	pertenenciaUsuarios( Cola ).
-		
-%Pertenencia Preguntas.
-% Entrada: Se ingresan preguntas.
-% Salida: boleano.
-% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
-% Ejemplo: pertenenciaPreguntas( [ [ 1 , "01-12-2020" , "Mi pregunta" , [ "Prolog" , "C#"] , "Dyllan" , 0 ] ] ).
-% pertenenciaPreguntas( [ [ 1 , "01-12-2020" , "Mi pregunta" , [ "Prolog" , "C#"] , 123 , 0 ] ] ).
-pertenenciaPreguntas( [] ).
-pertenenciaPreguntas( [ Cabeza | Cola ] ):- is_list( Cabeza ) , obtenerIDPregunta( Cabeza , IDPreguntas ) , number( IDPreguntas ) ,
-	obtenerFechaPregunta( Cabeza , FechaPreguntas ) , string( FechaPreguntas ) ,obtenerContenidoPregunta( Cabeza , ContenidoPreguntas ) , string( ContenidoPreguntas ) ,
-	obtenerEtiquetasPregunta( Cabeza , Etiquetas ) , is_list( Etiquetas ) ,obtenerAutorPregunta( Cabeza , AutorPregunta ) , string( AutorPregunta ) ,
-	obtenerRespondidaPregunta( Cabeza , RespondidaPreguntas ) , number( RespondidaPreguntas ) , pertenenciaPreguntas( Cola ).
-
-%Pertenencia Respuestas.
-% Entrada: Se ingresan respuestas.
-% Salida: boleano.
-% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
-% Ejemplo: pertenenciaRespuestas( [ [ 1 , "01-12-2020" , 1 , "Mi respuesta" , [ "hola" , "holas"] , "Dyllan" ] ] ).
-% pertenenciaRespuestas( [ [ 1 , "01-12-2020" , 1 , 123 , [ "hola" , "holas"] , "Dyllan" ] ] ).
-pertenenciaRespuestas( [] ).
-pertenenciaRespuestas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,obtenerID1Respuesta( Cabeza , ID1Respuestas ) , number( ID1Respuestas ) ,
-	obtenerFechaRespuesta( Cabeza , FechaRespuestas ) , string( FechaRespuestas ) ,obtenerID2Respuesta( Cabeza , ID2Respuestas ) , number( ID2Respuestas ) ,
-	obtenerContenidoRespuesta( Cabeza , ContenidoRepuesta ) , string( ContenidoRepuesta ) ,obtenerEtiquetasRespuesta( Cabeza , EtiquetasRepuestas ) , is_list( EtiquetasRepuestas ) ,
-	obtenerAutorRespuesta( Cabeza , AutorRespuesta ) , string( AutorRespuesta ) , pertenenciaRespuestas( Cola ).
-
-%Pertenencia Usuario Activo.
-% Entrada: Se ingresan usuario activo.
-% Salida: boleano.
-% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
-% Ejemplo: pertenenciaUsuarioActivo( [ "Dyllan" , "123" ] ).
-% pertenenciaUsuarioActivo( [ "Dyllan" , 123 ] ).
-pertenenciaUsuarioActivo( [] ).
-pertenenciaUsuarioActivo( [ Cabeza | Cola]  ):-string( Cabeza ) , pertenenciaUsuarioActivo( Cola ).
-
-%Pertenencia Stack
-% Entrada: Se ingresa el stack.
-% Salida: boleano.
-% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
-% Ejemplo: perteneceAStack([ [ [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "01-12-2020" , "Soy pregunta" , [ "pregunta" , "nel"] , "Dyllan" , 0 ] ]  , [] , [ "Dyllan" , "123" ] ]).
-% perteneceAStack([  "dyllan","123",0  , [ [ 1 , "01-12-2020" , "Soy pregunta" , [ "binario" , "nulo"] , "Dyllan" , 0 ] ]  , [] , [ "Dyllan" , "123" ] ]).
-perteneceAStack( Stack ):- obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsuarios( UsuarioS ) ,
-	obtenerPreguntaS( Stack , PreguntaS ) , pertenenciaPreguntas( PreguntaS ) ,
-	obtenerRespuestaS( Stack , RespuestaS ) , pertenenciaRespuestas( RespuestaS ) ,
-	obtenerActivo( Stack , UsuarioActivo ) , pertenenciaUsuarioActivo( UsuarioActivo ).
-
-%SELECTORES
+%SELECTORES SE Encuentran primero que el de pertenencia porque son utilizados en ellos.
 % Entrada: El elemento que se quiere seleccionar
 % Salida: El elemento. 
 % Descripcion: El selector es utilizado para obtener datos dentro del stack.
@@ -123,7 +66,63 @@ obtenerNombreActivo( [ Usuario , _ ] , Usuario ).
 %obtiene contraseña de usuario.
 obtenerPassActivo( [ _ , Password ] , Password ).
 
-%FUNCIONES ADICIONALES
+%PERTENENCIA
+%Pertenencia Usuario.
+% Entrada: Se ingresa un usuario.
+% Salida: boleano.
+% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaUsuarios( [ [ "Dyllan" , "123" , 0 ] ] ).
+% pertenenciaUsuarios( [ [ hola , "123" , h ] ] ).
+pertenenciaUsuarios( [] ).
+pertenenciaUsuarios( [ Cabeza | Cola] ):- is_list( Cabeza ) , obtenerUsuario( Cabeza , NombreUsuario ) , string( NombreUsuario ) ,
+	obtenerPassUsuario( Cabeza , PassUsuario ) ,string( PassUsuario ) ,obtenerReputacionUsuario( Cabeza , ReputacionUsuario ) , number( ReputacionUsuario ) ,
+	pertenenciaUsuarios( Cola ).
+		
+%Pertenencia Preguntas.
+% Entrada: Se ingresan preguntas.
+% Salida: boleano.
+% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaPreguntas( [ [ 1 , "01-12-2020" , "Mi pregunta" , [ "Prolog" , "C#"] , "Dyllan" , 0 ] ] ).
+% pertenenciaPreguntas( [ [ 1 , "01-12-2020" , "Mi pregunta" , [ "Prolog" , "C#"] , 123 , 0 ] ] ).
+pertenenciaPreguntas( [] ).
+pertenenciaPreguntas( [ Cabeza | Cola ] ):- is_list( Cabeza ) , obtenerIDPregunta( Cabeza , IDPreguntas ) , number( IDPreguntas ) ,
+	obtenerFechaPregunta( Cabeza , FechaPreguntas ) , string( FechaPreguntas ) ,obtenerContenidoPregunta( Cabeza , ContenidoPreguntas ) , string( ContenidoPreguntas ) ,
+	obtenerEtiquetasPregunta( Cabeza , Etiquetas ) , is_list( Etiquetas ) ,obtenerAutorPregunta( Cabeza , AutorPregunta ) , string( AutorPregunta ) ,
+	obtenerRespondidaPregunta( Cabeza , RespondidaPreguntas ) , number( RespondidaPreguntas ) , pertenenciaPreguntas( Cola ).
+
+%Pertenencia Respuestas.
+% Entrada: Se ingresan respuestas.
+% Salida: boleano.
+% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaRespuestas( [ [ 1 , "01-12-2020" , 1 , "Mi respuesta" , [ "hola" , "holas"] , "Dyllan" ] ] ).
+% pertenenciaRespuestas( [ [ 1 , "01-12-2020" , 1 , 123 , [ "hola" , "holas"] , "Dyllan" ] ] ).
+pertenenciaRespuestas( [] ).
+pertenenciaRespuestas( [ Cabeza | Cola ] ):-is_list( Cabeza ) ,obtenerID1Respuesta( Cabeza , ID1Respuestas ) , number( ID1Respuestas ) ,
+	obtenerFechaRespuesta( Cabeza , FechaRespuestas ) , string( FechaRespuestas ) ,obtenerID2Respuesta( Cabeza , ID2Respuestas ) , number( ID2Respuestas ) ,
+	obtenerContenidoRespuesta( Cabeza , ContenidoRepuesta ) , string( ContenidoRepuesta ) ,obtenerEtiquetasRespuesta( Cabeza , EtiquetasRepuestas ) , is_list( EtiquetasRepuestas ) ,
+	obtenerAutorRespuesta( Cabeza , AutorRespuesta ) , string( AutorRespuesta ) , pertenenciaRespuestas( Cola ).
+
+%Pertenencia Usuario Activo.
+% Entrada: Se ingresan usuario activo.
+% Salida: boleano.
+% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: pertenenciaUsuarioActivo( [ "Dyllan" , "123" ] ).
+% pertenenciaUsuarioActivo( [ "Dyllan" , 123 ] ).
+pertenenciaUsuarioActivo( [] ).
+pertenenciaUsuarioActivo( [ Cabeza | Cola]  ):-string( Cabeza ) , pertenenciaUsuarioActivo( Cola ).
+
+%Pertenencia Stack
+% Entrada: Se ingresa el stack.
+% Salida: boleano.
+% Descripcion: Comprueba que sus elementos pertenezcan a los datos especificados.
+% Ejemplo: perteneceAStack([ [ [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "01-12-2020" , "Soy pregunta" , [ "pregunta" , "nel"] , "Dyllan" , 0 ] ]  , [] , [ "Dyllan" , "123" ] ]).
+% perteneceAStack([  "dyllan","123",0  , [ [ 1 , "01-12-2020" , "Soy pregunta" , [ "binario" , "nulo"] , "Dyllan" , 0 ] ]  , [] , [ "Dyllan" , "123" ] ]).
+perteneceAStack( Stack ):- obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsuarios( UsuarioS ) ,
+	obtenerPreguntaS( Stack , PreguntaS ) , pertenenciaPreguntas( PreguntaS ) ,
+	obtenerRespuestaS( Stack , RespuestaS ) , pertenenciaRespuestas( RespuestaS ) ,
+	obtenerActivo( Stack , UsuarioActivo ) , pertenenciaUsuarioActivo( UsuarioActivo ).
+
+%PREDICADOS ADICIONALES
 
 %existeUsuario
 % Entrada: Un usuario.
@@ -131,7 +130,7 @@ obtenerPassActivo( [ _ , Password ] , Password ).
 % Descripcion: Funcion que se utiliza para saber si un usuario existe en nuestro stack.
 % Ejemplo: existeUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllan" , Existe ).
 % existeUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllansasa" , Existe ).
-existeUsuario( [] , _ , Existe  ):-Existe = false.
+existeUsuario( [] , _ , Existe  ):- Existe = false.
 existeUsuario( [ Cabeza | _ ] , NombreUsuario , Existe ):-
 	obtenerUsuario( Cabeza , NombreUsuarioStack ) , NombreUsuarioStack == NombreUsuario , Existe = true.
 existeUsuario( [ Cabeza | Cola ] , NombreUsuario , Existe ):-obtenerUsuario( Cabeza , NombreUsuarioStack ) , not( NombreUsuarioStack == NombreUsuario ) , 
@@ -143,7 +142,7 @@ existeUsuario( [ Cabeza | Cola ] , NombreUsuario , Existe ):-obtenerUsuario( Cab
 % Descripcion: Se utiliza para saber si una pregunta existe.
 % Ejemplo: existePregunta([ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] , [ 2 , "02-12-2020" , "pregunta2" , [ "pregunta" , "pregunta2"] , "Salgado" , 0 ]], 1 ,Existe).
 % existePregunta([ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] , [ 2 , "02-12-2020" , "pregunta2" , [ "pregunta" , "pregunta2"] , "Salgado" , 0 ]], 3 ,Existe).
-existePregunta( [] , _ , Existe ):-Existe = false.
+existePregunta( [] , _ , Existe ):- Existe = false.
 existePregunta( [ Cabeza | _ ] , IDPreguntaRespuesta , Existe ):-
 	obtenerIDPregunta( Cabeza , IDPreguntaStack ) , 
 	IDPreguntaRespuesta == IDPreguntaStack , Existe = true.
@@ -175,13 +174,12 @@ contarPreguntasRespuestas( [ _ | Cola ] , Cantidad , Salida ):-CantidadAux is ( 
 contarPreguntasRespuestas( [ ] , Cantidad , Salida ):-Salida = Cantidad.
 
 %sacarUsuario
-
 % Entrada: Se ingresa el nombre de un usuario.
 % Salida: Si se encuentra nos entrega el usuario , si no devuelve un false.
 % Descripcion: Se utiliza para obtener un usuario.
 % Ejemplo: sacarUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "Dyllan" , Usuario ).
 % sacarUsuario( [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , "juanito" , Usuario ).
-sacarUsuario( [] , _ , Usuario ):-Usuario=false.
+sacarUsuario( [] , _ , Usuario ):- Usuario=false.
 sacarUsuario( [ Cabeza | _ ] , NombreUsuario , Usuario ):-obtenerUsuario( Cabeza , NombreUsuarioStack ) , NombreUsuarioStack == NombreUsuario , Usuario = Cabeza.
 sacarUsuario( [ Cabeza | Cola ] , NombreUsuario , Usuario ):-
 	obtenerUsuario( Cabeza , NombreUsuarioStack ) , not( NombreUsuarioStack == NombreUsuario ) , sacarUsuario( Cola , NombreUsuario , Usuario ).
@@ -259,14 +257,16 @@ agregaUsuarios( Lista , [ Cabeza | Cola ] , Salida ):-
 % Salida: Datos de pregunta.
 % Descripcion: Se utiliza para realizar el stackToString, para añadir sus datos y que sean impresos.
 agregaPreguntas( Lista , [] , Salida ):-Salida = Lista.
+%caso para cuando la pregunta no esta respondida.
 agregaPreguntas( Lista , [ Cabeza | Cola ] , Salida ):-
-	append( Lista ,   [". ID Pregunta: "] , Salida1 ) , obtenerIDPregunta( Cabeza , IDPregunta ) , append( Salida1 , [IDPregunta] , Salida2 ),
+	append( Lista ,   ["ID Pregunta: "] , Salida1 ) , obtenerIDPregunta( Cabeza , IDPregunta ) , append( Salida1 , [IDPregunta] , Salida2 ),
 	append( Salida2 , [". Fecha: "] , Salida3 ) , obtenerFechaPregunta( Cabeza , FechaPregunta ) , append( Salida3 , [FechaPregunta] , Salida4 ),
 	append( Salida4 , [". Contenido: "] , Salida5 ) , obtenerContenidoPregunta( Cabeza , ContenidoPregunta ) , append( Salida5 , [ContenidoPregunta] , Salida6 ),
 	append( Salida6 , [". Etiquetas: "] , Salida7 ) , obtenerEtiquetasPregunta( Cabeza , EtiquetaPregunta ) , append( Salida7 , [EtiquetaPregunta] , Salida8 ),
 	append( Salida8 , [". Autor: "] , Salida9 ) , obtenerAutorPregunta( Cabeza , AutorPregunta ) , append( Salida9 , [AutorPregunta] , Salida10 ),
 	append( Salida10 ,[". Respondida?: "] , Salida11 ) ,obtenerRespondidaPregunta( Cabeza , Respondida ) , Respondida == 0 , append( Salida11 , ["No"] , Salida12 ), append( Salida12 , ["\n"] , Salida13 ),
 	agregaPreguntas( Salida13 , Cola , Salida ).
+%caso para cuando la pregunta ya esta respondida.
 agregaPreguntas( Lista , [ Cabeza | Cola ] , Salida ):-
 	append( Lista ,   ["ID Pregunta: "] , Salida1 ) , obtenerIDPregunta( Cabeza , IDPregunta ) , append( Salida1 , [IDPregunta] , Salida2 ),
 	append( Salida2 , [". Fecha: "] , Salida3 ) , obtenerFechaPregunta( Cabeza , FechaPregunta ) , append( Salida3 , [FechaPregunta] , Salida4 ),
@@ -294,9 +294,9 @@ agregaRespuestas( Lista , [ Cabeza | Cola ] , Salida ):-
 % Entrada: Obtiene los datos de un usuario Activo.
 % Salida: Datos de un usuario activo.
 % Descripcion: Se utiliza para realizar el stackToString, para añadir sus datos y que sean impresos.
-agregaUsuariosActivo( Lista , Usuario , Salida ):-
-	append( Lista , ["Nombre: "] , Salida1 ) , obtenerNombreActivo( Usuario , NombreUsuarioActivo ) , append( Salida1 , [NombreUsuarioActivo] , Salida2 ),
-	append( Salida2 , [". Pass: "] , Salida3 ) , obtenerPassActivo( Usuario , PassUsuarioActivo ) , append( Salida3 , [PassUsuarioActivo] , Salida4 ),
+agregaUsuariosActivo( Lista , Usuario , Salida ):-append( Lista , ["Nombre: "] , Salida1 ) , 
+	obtenerNombreActivo( Usuario , NombreUsuarioActivo ) , append( Salida1 , [NombreUsuarioActivo] , Salida2 ),append( Salida2 , [". Pass: "] , Salida3 ) , 
+	obtenerPassActivo( Usuario , PassUsuarioActivo ) , append( Salida3 , [PassUsuarioActivo] , Salida4 ),
 	Salida = Salida4.
 
 %filtroPreguntas
@@ -334,8 +334,8 @@ stack1([ [ [ "Dyllan" , "123" , 0 ] , [ "Ignacio" , "456" , 0 ],[ "Salgado" , "7
     [ 4 , "29-11-2020" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ],[ 5 , "30-11-2020" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ] ] , 
     [ [ 1 , "30-11-2020" , 1 , "respuestaAdyllan1" , [ "tamal" , "malo"] , "Ignacio" ], [ 1 , "30-11-2020" , 2 , "respuestaAdyllan2" , [ "tabien" , "buenardo"] , "Espinoza" ], [ 1 , "01-12-2020" , 3 , "respuestaAdyllan3" , [ "hola" , "hola1"] , "Espinoza" ],
     [ 1 , "01-12-2020" , 4 , "respuestaAdyllan1.1" , [ "hola2" , "hola3"] , "Salgado" ], [ 2 , "02-12-2020" , 5 , "respuestaAdyllan2.1" , [ "hola4" , "hola5"] , "Espinoza" ],
-    [ 3 , "02-12-2020" , 6 , "respuestaAdyllan3.1" , [ "hola6" , "hola7"] , "Ignacio" ],[ 3 , "02-12-2020" , 7 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ],
-    [ 1 , "03-12-2020" , 8 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ],[ 1 , "03-12-2020" , 9 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ],[ 2 , "03-12-2020" , 10 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ]],[]]).
+    [ 3 , "02-12-2020" , 6 , "respuestaAIgnacio" , [ "hola6" , "hola7"] , "Salgado" ],[ 3 , "02-12-2020" , 7 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ],
+    [ 4 , "03-12-2020" , 8 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ],[ 5 , "03-12-2020" , 9 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ],[ 5 , "03-12-2020" , 10 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ]],[]]).
 %Entrada: Un stack con 2 usuarios, 3 preguntas y 1 respuesta.
 %Salida: El stack con el que se trabaja.
 %Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
@@ -392,33 +392,42 @@ answer( Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ):
 % Entrada: Stack id de pregunta, id de respuesta.
 % Salida: respuesta aceptada para una pregunta, se añaden puntajes a quien respondio y a quien creo la pregunta.
 % Descripcion: Predicado que nos permite aceptar respuestas de preguntas, solo el usuario que genera pregunta puede aceptar las respuestas.
-accept( Stack , _ , _ , Stack2 ):-
-	obtenerActivo( Stack , Activo ),Activo == [],Stack2 = false,!,fail.
-accept( Stack , IdPregunta , _ , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
-	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == false,!,Stack2 = false.
-accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
-	obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
-	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerRespuestaS( Stack , Respuestas ),
-	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == false,!,Stack2 = false.	
-accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
-	obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
-	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,
+%caso cuando no se encuentra una sesion activa.
+accept( Stack , _ , _ , Stack2 ):-obtenerActivo( Stack , Activo ),Activo == [],Stack2 = false,!,fail.
+%caso cuando la pregunta no existe, tira false.
+accept( Stack , IdPregunta , _ , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == false,!,fail.
+%caso cuando el usuario activo trata de aceptar una respuesta de pregunta que no le pertenece, entrega falso.	
+accept( Stack , IdPregunta , _ , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
+	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
+	not( NombreActivo == AutorPregunta ),!,fail.
+%caso cuando la respuesta no existe, entrega un  falso.
+accept( Stack , IdPregunta , IdRespuesta , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
+	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
+	NombreActivo == AutorPregunta,obtenerRespuestaS( Stack , Respuestas ),
+	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == false,!,fail.
+%caso cuando la respuesta esta respondida, pero el usuario que responde no se encuentra registrado.
+accept( Stack , IdPregunta , IdRespuesta , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta ,ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
+	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
+	NombreActivo == AutorPregunta,obtenerRespuestaS( Stack , Respuestas ),existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),
+	ExisteRespuesta == true,sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),
+	obtenerUsuarioS( Stack , Usuarios ),existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == false,!,fail.
+%caso bonito cuando todo existe da el puntaje al usuario que responde y acepta la respuesta.
+accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
+	sacarPregunta( Preguntas , IdPregunta , PreguntaAutor ), obtenerAutorPregunta( PreguntaAutor , AutorPregunta ) , NombreActivo == AutorPregunta,
 	obtenerRespuestaS( Stack , Respuestas ),existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == true,
-	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),
-	obtenerUsuarioS( Stack , Usuarios ),existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == false,!,Stack2 = false.
-accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
-	obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
-	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerRespuestaS( Stack , Respuestas ),
-	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == true,sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),
-	obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),obtenerUsuarioS( Stack , Usuarios ),
-	existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == true,!,
-	sacarUsuario( Usuarios , AutorRespuesta , UsuarioRespondedor ),obtenerPassUsuario( UsuarioRespondedor , PassRespondedor ),
-	obtenerReputacionUsuario( UsuarioRespondedor , ReputacionRespondedor ),ReputacionNueva is ( ReputacionRespondedor + 15 ),
-	UsuarioRespondedorNuevo = [ AutorRespuesta , PassRespondedor , ReputacionNueva ],usuariosNuevo( Usuarios , AutorRespuesta , UsuarioRespondedorNuevo , [] , Usuarios2 ),
+	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),obtenerUsuarioS( Stack , Usuarios ),
+	existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == true,!,sacarUsuario( Usuarios , AutorRespuesta , UsuarioRespondedor ),
+	obtenerPassUsuario( UsuarioRespondedor , PassRespondedor ),obtenerReputacionUsuario( UsuarioRespondedor , ReputacionRespondedor ),
+	ReputacionNueva is ( ReputacionRespondedor + 15 ),UsuarioRespondedorNuevo = [ AutorRespuesta , PassRespondedor , ReputacionNueva ],
+	usuariosNuevo( Usuarios , AutorRespuesta , UsuarioRespondedorNuevo , [] , Usuarios2 ),
 	sacarPregunta( Preguntas , IdPregunta , PreguntaAutor ),
 	obtenerFechaPregunta( PreguntaAutor , FechaPregunta ) ,
 	obtenerContenidoPregunta( PreguntaAutor , ContenidoPregunta ) ,obtenerEtiquetasPregunta( PreguntaAutor , EtiquetasPregunta ) ,
-	obtenerAutorPregunta( PreguntaAutor , AutorPregunta ) ,
 	sacarUsuario( Usuarios , AutorPregunta , UsuarioRespondido ), obtenerPassUsuario( UsuarioRespondido , PassRespondido ),
 	obtenerReputacionUsuario( UsuarioRespondido , ReputacionRespondido ), ReputacionNueva2 is ( ReputacionRespondido + 2 ),
 	UsuarioRespondidoNuevo = [ AutorPregunta , PassRespondido , ReputacionNueva2 ], usuariosNuevo( Usuarios2 , AutorPregunta , UsuarioRespondidoNuevo , [] , Usuarios3 ),
@@ -429,6 +438,7 @@ accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-
 % Entrada: Todo el stack
 % Salida: stack como string
 % Descripcion: Nos permite transformar todo nuestro stack como si fuera un string.
+% Nos permite mostrar como string todo el stack, caso cuando no hay usuario activo.
 stackToString( Stack , StackStr ):-
 	perteneceAStack( Stack ),
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),UsuarioActivo == [],
@@ -443,50 +453,106 @@ stackToString( Stack , StackStr ):-
 	formatoListas( [] , Salida14 , Salida15 ),
 	atomics_to_string( Salida15 , StackAsString ),
 	StackStr = StackAsString.
+%Si existe un usuario activo, solo se mostraran las preguntas del usuario y si esta respondida o no.
 stackToString( Stack , StackStr ):-
 	perteneceAStack( Stack ),
-	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),
+	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerActivo( Stack , UsuarioActivo ),
 	not( UsuarioActivo == [] ), obtenerNombreActivo( UsuarioActivo , NombreActivo ),
 	filtroPreguntas( Preguntas , NombreActivo , [] , PreguntasFiltradas ),
 	append( [] , ["USUARIOS REGISTRADOS"] , Salida1 ) ,
 	agregaUsuarios( Salida1 , Autores , Salida3 ) , append( Salida3 , ["\n"] , Salida4 ), 
 	append( Salida4 , ["PREGUNTAS DEL STACK"] , Salida5 ) , append( Salida5 , ["\n"] , Salida6 ),
 	agregaPreguntas( Salida6 , PreguntasFiltradas , Salida7 ) , append( Salida7 , ["\n"] , Salida8 ),
-	append( Salida8 , ["RESPUESTAS DEL STACK"] , Salida9 ) , append( Salida9 , ["\n"] , Salida10 ),
-	agregaRespuestas( Salida10 , Respuestas , Salida11 ) , append( Salida11 , ["\n"] , Salida12 ), append( Salida12 , ["\n"] , Salida13 ),
-	append( Salida13 , ["USUARIO CON SESION INICIADA"] , Salida14) , append( Salida14, ["\n"] , Salida15 ),
-	agregaUsuariosActivo( Salida15 , UsuarioActivo , Salida16 ) ,
-	formatoListas( [] , Salida16 , Salida17 ),
-	atomics_to_string(Salida17, StackAsString),
+	append( Salida8 , ["USUARIO CON SESION INICIADA"] , Salida9) , append( Salida9, ["\n"] , Salida10 ),
+	agregaUsuariosActivo( Salida10 , UsuarioActivo , Salida11 ) ,
+	formatoListas( [] , Salida11 , Salida12 ),
+	atomics_to_string(Salida12, StackAsString),
 	StackStr = StackAsString.
 
 %EJEMPLOS:
 %stackRegister:
-%1)
-%2)
-%3)
+%1)stackRegister( [ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ ] , [ ] , [ ] ] , "SoyNuevo" , "clave123" , StackRegistrado).
+%2)stackRegister( [ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ ] , [ ] , [ ] ] , "Dyllan" , "clave123" , StackRegistrado).
+%3)stackRegister( [ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ ] , [ ] , [ ] ] , SoyNuevo , "clave123" , StackRegistrado).
 
 %stackLogin:
-%1)
-%2)
-%3)
+%1)stackLogin( [ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ,["SoyNuevo","clave123",0 ] ] , [ ] , [ ] , [ ] ] , "Dyllan" , "123" , StackLogeado).
+%2)stackLogin( [ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ,["SoyNuevo","clave123",0 ] ] , [ ] , [ ] , [ ] ] , "Dyllan" , "clavemala" , StackLogeado).
+%3)stackLogin( [ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ,["SoyNuevo","clave123",0 ] ] , [ ] , [ ] , [ ] ] , "Usuariomalo" , "clave123" , StackLogeado).
 
 %ask:
-%1)
-%2)
-%3)
+%1)ask([[["Dyllan", "123", 0], ["Salgado", "456", 0] ], [], [], ["Dyllan", "123"]],"02-12-2020","pregunta1",["pan","jamon"],StackConAsk).
+%2)ask([[["Dyllan", "123", 0], ["Salgado", "456", 0] ], [], [], ["Salgado", "123"]],"02-12-2020", pregunta1 ,["pan","jamon"],StackConAsk).
+%3)ask([[["Dyllan", "123", 0], ["Salgado", "456", 0] ], [], [], ["Dyllan", "123"]],"02-12-2020", "pregunta1" ,"pan",StackConAsk).
 
 %answer:
-%1)
-%2)
-%3)
+%1)answer([[["Dyllan", "123", 0], ["Salgado", "456", 0] ], [[1, "02-12-2020", "pregunta1", ["pan", "jamon"], "Salgado", 0]], [], ["Dyllan","123"] ], "03-12-2020" , 1 , "respuesta a Salgado" , ["aaaaaah" , "eeeeeh"] , StackConAnswer).
+%2)answer([[["Dyllan", "123", 0], ["Salgado", "456", 0] ], [[1, "02-12-2020", "pregunta1", ["pan", "jamon"], "Salgado", 0]], [], ["Dyllan","123"] ], "03-12-2020" , 2 , "respuesta a Salgado" , ["aaaaaah" , "eeeeeh"] , StackConAnswer).
+%3)answer([[["Dyllan", "123", 0], ["Salgado", "456", 0] ], [[1, "02-12-2020", "pregunta1", ["pan", "jamon"], "Salgado", 0]], [], ["Dyllan","123"] ], "03-12-2020" , 0 , "respuesta a Salgado" , ["aaaaaah" , "eeeeeh"] , StackConAnswer).
 
 %accept:
-%1)
-%2)
-%3)
+%1)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",0]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado","456"] ],1,1,StackAceptado).
+%2)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Dyllan",0]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Salgado"]],["Dyllan","123"] ],1,1,StackAceptado).
+%3)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",0]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado","456"] ],2,1,StackAceptado).
 
-%stackToString:
-%1)
-%2)
-%3)
+%stackToString
+%1)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],[]], StackStr).
+%2)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado","456"]], StackStr).
+%3)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado",456 ]], StackStr).
+
+
+%Ejemplo con los stack creados:
+%Se llama al stack1 y se registra un usuario con el stackRegister.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2).
+%Luego de registrarlo se logea con el stackLogin.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3).
+%Si esta logeado puede realizar una pregunta y se cierra su sesion activa.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4).
+%Vuelve a logearse para realizar una respuesta, se cierra nuevamente la sesion activa.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"SoyNuevoEnStack","123",Stack5),answer(Stack5,"05-12-2020",2,"mi respuesta",["lol","dota"],Stack6).
+%Logeamos a un usuario que quiera aceptar una respuesta de su pregunta y se acepta con accept.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"SoyNuevoEnStack","123",Stack5),answer(Stack5,"05-12-2020",2,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Dyllan","123",Stack7),accept(Stack7,2,11,Stack8).
+%Logeamos a otro usuario que quiera aceptar una respuesta de su pregunta y se acepta con accept.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"SoyNuevoEnStack","123",Stack5),answer(Stack5,"05-12-2020",2,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Ignacio","456",Stack7),accept(Stack7,3,6,Stack8).
+%Se realiza stackToString para mostrar todo el stack como string.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"SoyNuevoEnStack","123",Stack5),answer(Stack5,"05-12-2020",2,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Dyllan","123",Stack7),accept(Stack7,2,11,Stack8),stackToString(Stack8,Stack9).
+%Se realiza stackToString para mostrar todo el stack como string.
+	%stack1(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"SoyNuevoEnStack","123",Stack5),answer(Stack5,"05-12-2020",2,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Ignacio","456",Stack7),accept(Stack7,3,6,Stack8),stackToString(Stack8,Stack9).
+
+%Stack2
+%Se llama al stack2 y se registra un usuario con el stackRegister.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2).
+%Luego de registrarlo se logea con el stackLogin.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3).
+%Si esta logeado puede realizar una pregunta y se cierra su sesion activa.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4).
+%Se logea dyllan para aceptar una respuesta.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Salgado","456",Stack5).
+%Acepta una respuesta.
+	%caso donde se ingresan bien datos, nombre usuario,clave y si existe pregunta y respuesta.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Salgado","456",Stack5),accept(Stack5,2,1,Stack6). 
+	%caso donde no existe pregunta o respuesta.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Salgado","456",Stack5),accept(Stack5,2,2,Stack6).
+%stackToString.
+	%Sin sesion activa.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Salgado","456",Stack5),accept(Stack5,2,1,Stack6),stackToString(Stack6,StackStr).
+	%Con sesion activa.
+	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Salgado","456",Stack5),accept(Stack5,2,1,Stack6),stackLogin(Stack6,"Dyllan","123",Stack7),stackToString(Stack7,StackStr).
+
+%Crando Stack desde 0.
+%Se crea el stack.
+	%crearStack(Stack).
+%Registramos a un usuario en el Stack.
+	%crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1).
+%Registramos a otro usuario en el Stack.
+	%crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1),stackRegister(Stack1,"Salgado","clave456",Stack2).
+%Logeamos a Salgado para formular pregunta.
+    %crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1),stackRegister(Stack1,"Salgado","clave456",Stack2),stackLogin(Stack2,"Salgado","clave456",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4).
+%Se logea a Dyllan para responder la pregunta de salgado.
+    %crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1),stackRegister(Stack1,"Salgado","clave456",Stack2),stackLogin(Stack2,"Salgado","clave456",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Dyllan","clave123",Stack5), answer(Stack5,"05-12-2020",1,"mi respuesta",["lol","dota"],Stack6).
+%Se logea a Salgado para aceptar la respuesta de Dyllan.
+	%crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1),stackRegister(Stack1,"Salgado","clave456",Stack2),stackLogin(Stack2,"Salgado","clave456",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Dyllan","clave123",Stack5), answer(Stack5,"05-12-2020",1,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Salgado","clave456",Stack7),accept(Stack7,1,1,Stack8).
+%Se imprime con usuario activo y sin usuario activo.
+	%Con usuario activo: crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1),stackRegister(Stack1,"Salgado","clave456",Stack2),stackLogin(Stack2,"Salgado","clave456",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Dyllan","clave123",Stack5), answer(Stack5,"05-12-2020",1,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Salgado","clave456",Stack7),accept(Stack7,1,1,Stack8), stackLogin(Stack8,"Salgado","clave456",Stack9), stackToString(Stack9, StackStr).
+	%Sin usuario activo: crearStack(Stack),stackRegister(Stack,"Dyllan","clave123",Stack1),stackRegister(Stack1,"Salgado","clave456",Stack2),stackLogin(Stack2,"Salgado","clave456",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Dyllan","clave123",Stack5), answer(Stack5,"05-12-2020",1,"mi respuesta",["lol","dota"],Stack6),stackLogin(Stack6,"Salgado","clave456",Stack7),accept(Stack7,1,1,Stack8), stackToString(Stack8, StackStr).
+	
