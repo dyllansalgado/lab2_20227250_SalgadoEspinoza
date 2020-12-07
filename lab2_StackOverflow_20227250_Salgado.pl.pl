@@ -1,6 +1,6 @@
 %Nombre : Dyllan Salgado -Fecha: 06-12-2020 -Nombre profesor :Victor Flores.
 
-%Tipo de datos variables utilizadas.
+%Dominios
 /*StackSalida=Representa nuestro stack.
  Cabeza=Representa a la cabeza de una lista.
  Cola=Representa la cola de una lista.
@@ -92,6 +92,26 @@
 %TDA Stack
 % El stack tendra 4 listas, la primera sera la lista con los usuarios registrados, la 2da sera la lista con las preguntas, la 3ra sera la lista con respuestas y la ultima sera una lista con los datos del usuario activo.
 % [ [Usuarios] , [Preguntas] , [Respuestas] , [Activo] .
+
+%HECHOS
+
+%Entrada: Un stack con 4 usuarios, 5 preguntas y 10 respuestas.
+%Salida: El stack con el que se trabaja.
+%Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
+stack1([ [ [ "Dyllan" , "123" , 0 ] , [ "Ignacio" , "456" , 0 ],[ "Salgado" , "789" , 0 ], [ "Espinoza" , "abc" , 0 ] ] , 
+	[ [ 1 , "27-11-2020" , "holaquetal?" , [ "c" , "c++"] , "Dyllan" , 0 ] , [ 2 , "27-11-2020" , "holaestasbien?" , [ "c++" , "c"] , "Dyllan" , 0 ] , [ 3 , "28-11-2020" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ],
+    [ 4 , "29-11-2020" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ],[ 5 , "30-11-2020" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ] ] , 
+    [ [ 1 , "30-11-2020" , 1 , "respuestaAdyllan1" , [ "tamal" , "malo"] , "Ignacio" ], [ 1 , "30-11-2020" , 2 , "respuestaAdyllan2" , [ "tabien" , "buenardo"] , "Espinoza" ], [ 1 , "01-12-2020" , 3 , "respuestaAdyllan3" , [ "hola" , "hola1"] , "Espinoza" ],
+    [ 1 , "01-12-2020" , 4 , "respuestaAdyllan1.1" , [ "hola2" , "hola3"] , "Salgado" ], [ 2 , "02-12-2020" , 5 , "respuestaAdyllan2.1" , [ "hola4" , "hola5"] , "Espinoza" ],
+    [ 3 , "02-12-2020" , 6 , "respuestaAIgnacio" , [ "hola6" , "hola7"] , "Salgado" ],[ 3 , "02-12-2020" , 7 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ],
+    [ 4 , "03-12-2020" , 8 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ],[ 5 , "03-12-2020" , 9 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ],[ 5 , "03-12-2020" , 10 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ]],[]]).
+%Entrada: Un stack con 2 usuarios, 3 preguntas y 1 respuesta.
+%Salida: El stack con el que se trabaja.
+%Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
+stack2([ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "29-11-2020" , "Pregunta1Dyll" , [ "Anime" , "Goku"] , "Dyllan" , 0 ] , [ 2 , "30-11-2020" , "pregunta2Salg" , [ "Garen" , "Yasuo"] , "Salgado" , 0 ] , [ 3 , "01-12-2020" , "pregunta3Dyll" , [ "Videos" , "Musica"] , "Dyllan" , 0 ] ] , [ [ 2 , "01-12-2020" , 1 , "RespondeDyllanASalgado" , [ "Anime" , "DragonBallZ"] , "Dyllan" ] ] , [] ]).
+
+
+%REGLAS
 
 %CONSTRUCTOR
 % Entrada: Ninguna entrada.
@@ -417,20 +437,6 @@ listaString( String , [ Cabeza | Cola ] , Salida ):-string_concat(String, Cabeza
 
 %FUNCIONES OBLIGATORIAS
 %EJEMPLOS DE ESTAS FUNCIONES SE ENCUENTRAN AL FINAL.
-%Entrada: Un stack con 4 usuarios, 5 preguntas y 10 respuestas.
-%Salida: El stack con el que se trabaja.
-%Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
-stack1([ [ [ "Dyllan" , "123" , 0 ] , [ "Ignacio" , "456" , 0 ],[ "Salgado" , "789" , 0 ], [ "Espinoza" , "abc" , 0 ] ] , 
-	[ [ 1 , "27-11-2020" , "holaquetal?" , [ "c" , "c++"] , "Dyllan" , 0 ] , [ 2 , "27-11-2020" , "holaestasbien?" , [ "c++" , "c"] , "Dyllan" , 0 ] , [ 3 , "28-11-2020" , "holaestasmal?" , [ "disney+" , "netflix"] , "Ignacio" , 0 ],
-    [ 4 , "29-11-2020" , "holaestastranquilo?" , [ "twitch" , "facebook"] , "Salgado" , 0 ],[ 5 , "30-11-2020" , "holacomotellamas?" , [ "spotify" , "youtube"] , "Espinoza" , 0 ] ] , 
-    [ [ 1 , "30-11-2020" , 1 , "respuestaAdyllan1" , [ "tamal" , "malo"] , "Ignacio" ], [ 1 , "30-11-2020" , 2 , "respuestaAdyllan2" , [ "tabien" , "buenardo"] , "Espinoza" ], [ 1 , "01-12-2020" , 3 , "respuestaAdyllan3" , [ "hola" , "hola1"] , "Espinoza" ],
-    [ 1 , "01-12-2020" , 4 , "respuestaAdyllan1.1" , [ "hola2" , "hola3"] , "Salgado" ], [ 2 , "02-12-2020" , 5 , "respuestaAdyllan2.1" , [ "hola4" , "hola5"] , "Espinoza" ],
-    [ 3 , "02-12-2020" , 6 , "respuestaAIgnacio" , [ "hola6" , "hola7"] , "Salgado" ],[ 3 , "02-12-2020" , 7 , "respuestaAIgnacio" , [ "chao1" , "chao2"] , "Dyllan" ],
-    [ 4 , "03-12-2020" , 8 , "respuestaASalgado" , [ "chao3" , "chao4"] , "Ignacio" ],[ 5 , "03-12-2020" , 9 , "respuestaAEspinoza1" , [ "chao5" , "chao6"] , "Dyllan" ],[ 5 , "03-12-2020" , 10 , "respuestaAEspinoza2" , [ "chao7" , "chao8"] , "Salgado" ]],[]]).
-%Entrada: Un stack con 2 usuarios, 3 preguntas y 1 respuesta.
-%Salida: El stack con el que se trabaja.
-%Descripcion: Se crea un stack con usuarios, preguntas y respuestas.
-stack2([ [ [ "Dyllan" , "123" , 0 ] , [ "Salgado" , "456" , 0 ] ] , [ [ 1 , "29-11-2020" , "Pregunta1Dyll" , [ "Anime" , "Goku"] , "Dyllan" , 0 ] , [ 2 , "30-11-2020" , "pregunta2Salg" , [ "Garen" , "Yasuo"] , "Salgado" , 0 ] , [ 3 , "01-12-2020" , "pregunta3Dyll" , [ "Videos" , "Musica"] , "Dyllan" , 0 ] ] , [ [ 2 , "01-12-2020" , 1 , "RespondeDyllanASalgado" , [ "Anime" , "DragonBallZ"] , "Dyllan" ] ] , [] ]).
 
 %stackRegister
 % Entrada: recibe al stack , nombre de usuario y pass de usuario.
@@ -625,13 +631,13 @@ stackToString( Stack , StackStr ):-
 
 %accept:
 %1)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",0]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado","456"] ],1,1,StackAceptado).
-%2)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Dyllan",0]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Salgado"]],["Dyllan","123"] ],1,1,StackAceptado).
+%2)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Dyllan",0]],[[1,"03-12-2020",1,"respuesta a Dyllan",["aaaaaah","eeeeeh"],"Salgado"]],["Dyllan","123"] ],1,1,StackAceptado).
 %3)accept([[["Dyllan","123",0],["Salgado","456",0]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",0]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado","456"] ],2,1,StackAceptado).
 
 %stackToString
 %1)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],[]], StackStr).
 %2)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado","456"]], StackStr).
-%3)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado",456 ]], StackStr).
+%3)stackToString([[["Dyllan","123",15],["Salgado","456",2]],[[1,"02-12-2020","pregunta1",["pan","jamon"],"Salgado",1]],[[1,"03-12-2020",1,"respuesta a Salgado",["aaaaaah","eeeeeh"],"Dyllan"]],["Salgado",clavemala ]], StackStr).
 
 
 %Ejemplo con los stack creados:

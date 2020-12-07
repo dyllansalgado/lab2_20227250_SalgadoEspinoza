@@ -1,0 +1,140 @@
+///////////////////////////////////////////////////////////////////////////////////////
+/Escala de puntajes                                                                   /
+/0: No realizado.                                                                     /
+/0.25: Implementación con problemas mayores (funciona 25% de las veces o no           /
+/funciona)                                                                            /
+/0.5: Implementación con funcionamiento irregular (funciona 50% de las veces)         /  
+/0.75: Implementación con problemas menores (funciona 75% de las veces)               /
+/1: Implementación completa sin problemas (funciona 100% de las veces)                /  
+///////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////
+/Requerimientos No Funcionales Obligatorios :/
+//////////////////////////////////////////////
+1. (obligatorio) Incluir autoevaluación de cada uno de los requerimientos funcionales (obligatorios y extras) solicitados.
+PUNTAJE :1
+
+2. (obligatorio) Lenguaje: La implementación debe ser en el lenguaje de programación Prolog.
+PUNTAJE :1
+
+3. (obligatorio) Versión: Usar Swi-prolog versión 8.x.x .
+PUNTAJE : 1
+
+4. (1 pts) Documentación: Todos los predicados deben estar debidamente comentados. Indicando descripción de la relación, términos de entrada y de salida.
+PUNTAJE : 1
+
+5. (2.5 pts) Historial:  Historial de trabajo en Github. 
+PUNTAJE : 1
+
+6. (obligatorio) Ejemplos:  Al final de su código incluir al menos 3 ejemplos de uso para cada una de los predicados correspondientes a requerimientos funcionales obligatorios y los extra. Solo se revisarán aquellas funciones para las que existan los ejemplos provistos.
+PUNTAJE : 1
+
+7. (obligatorio) Prerrequisitos: Para cada predicado se establecen prerrequisitos. Estos deben ser cumplidos para que se proceda con la evaluación de la funcionalidad implementada.
+PUNTAJE : 1
+/////////////////////////////
+/Requerimientos Funcionales./
+/////////////////////////////
+1. (0.5 pts) TDAs. Implementar abstracciones apropiadas para el problema. Recomendamos leer el enunciado completo a fin de que analice el problema y determine el o los TDAs y representaciones apropiadas para la implementación de cada uno. 
+PUNTAJE : 1
+
+Requisitos:- Usar estructuras basadas en listas
+           - Especificar representación de manera clara para cada TDA implementado (en el informe y en el código a través de comentarios). Luego implementar constructores, funciones de pertenencia, y según se requiera selectores, modificadores y otras funciones que pueda requerir para las otras funciones requeridas a continuación.
+
+
+2. (0.5 pts) hechos: A partir de su implementación de los TDAs, proporcionar una base de hechos que contengan al menos: 2 stacks, 4 usuarios registrados, 5 preguntas y 10 respuestas.
+PUNTAJE : 1
+
+3.(0.5 pts) stackRegister: Predicado que permite consultar el valor que toma un Stack al ocurrir el registro de un nuevo usuario. Para esto se ingresa un stack inicial, nombre del usuario (identificador único, se debe verificar que no exista para su correcto registro), contraseña y el Stack resultante luego del registro. El retorno del predicado es true en caso que se pudo satisfacer el registro del usuario.
+Requisitos: - Debe funcionar cuando se entrega un Stack2 como variable sin valor como también teniendo un valor. 
+            - En el caso de ser una variable esta se unifica con el Stack resultante luego de registrar al usuario.
+            - En caso de ser un valor concreto se verifica si el Stack2 cumple con ser el resultante luego de registrar al usuario.
+
+Encabezado: stackRegister(Stack, Username, Password, Stack2).
+PUNTAJE : 1
+
+4.(0.5 pts) stackLogin: Predicado que permite autenticar a un usuario registrado. Si la autenticación es válida (i.e., que el usuario existe y su contraseña es correcta). El retorno es true. La actualización del stack incorpora al usuario autenticado en sesión activa (fundamental para que los predicados siguientes puedan funcionar).
+
+Requisito : - Si “Stack2” es una variable, se debe unificar con el stack resultante luego de agregar una sesión activa con el usuario que realizó login.
+	    - Si el usuario y/o la contraseña son incorrectas se debe retornar false.
+Encabezado: stackLogin(Stack, Username, Password, Stack2).
+
+PUNTAJE : 1
+
+5. (0.5 pts) ask: Predicado que permite a un usuario con sesión iniciada en la plataforma realizar una nueva pregunta. Cada pregunta registra el autor de la misma (obtenido desde la sesión iniciada con login), fecha de publicación, la pregunta, un listado de etiquetas. El retorno es true si se puede satisfacer en “Stack2” el stack con la nueva pregunta incluida y sin la sesión activa del usuario que realizó la pregunta.
+
+Requisitos:- Debe funcionar cuando se entrega un Stack como variable sin valor como también teniendo un valor. 
+	   - En el caso de ser una variable esta se unifica con el Stack2 resultante luego de agregar la pregunta y eliminar la sesión del usuario activo.
+           - En caso de ser un valor concreto se verifica si el Stack cumple con ser el resultante luego de haber realizado la pregunta y sin la sesión del usuario activo.
+	   - En caso de no haber una sesión activa debe retornar false.
+           - La fecha puede estar representada como lo estime conveniente, pero debe indicarlo en los ejemplos de uso.
+
+Encabezado: ask(Stack, Fecha, TextoPregunta, ListaEtiquetas, Stack2).
+
+PUNTAJE : 1
+
+6. (0.5 pts) answer: Predicado que permite consultar el valor que toma un Stack al realizar la respuesta a una pregunta. Para esto se ingresa un stack inicial con sesión iniciada, la fecha de la respuesta, el id de la pregunta, el texto de la respuesta, un listado de etiquetas y el Stack resultante luego del registro. El retorno del predicado es true en caso que se pudo satisfacer la creación de esta respuesta en el Stack resultante.
+
+Requisitos:- Debe retornar false si no existe una sesión activa. en el stack.
+	   - Debe retornar false si la pregunta con ese id no existe.
+	   - Para los casos anteriormente descritos debe hacer uso de predicado de corte !.
+	   - La fecha puede estar representada como lo estime conveniente, pero debe indicarlo en los ejemplos de uso.
+
+Encabezado:answer(Stack, Fecha, IdPregunta, TextoRespuesta, ListaEtiquetas, Stack2).
+
+PUNTAJE : 1
+
+7. (1 pts) accept: Predicado que permite consultar el valor que toma un Stack al aceptar una respuesta a una de sus preguntas. Para esto se ingresa un stack inicial, el id de una pregunta, el id de una respuesta y el Stack resultante luego de aceptar la respuesta. El retorno del predicado es true en caso que se pudo satisfacer la aceptación de la pregunta. Un usuario solo puede aceptar respuestas a sus propias preguntas. El stack resultante debe reflejar el nuevo estado de pregunta, respuesta, actualización de puntajes según indicaciones señaladas al comienzo de este enunciado, y la sesión activa del usuario en el stack debe desaparecer. 
+
+Requisitos:- Debe retornar false si no existe una sesión activa. en el stack.
+	   - Debe retornar false si la sesión iniciada no es del mismo usuario que hizo la pregunta a la que se está aceptando.
+	   - Debe retornar false si la pregunta con ese id no existe o si la respuesta con ese Id no existe.
+	   - Para los casos anteriormente descritos debe hacer uso de predicado de corte !.
+
+Encabezado: accept(Stack, IdPregunta, IdRespuesta, Stack2).
+
+PUNTAJE : 1
+
+8. (0.5 pts) stackToString: Predicado que permite consultar el valor que toma un String al intentar representar en éste cierto Stack. Para esto se ingresa un stack inicial y el String equivalente al Stack. El retorno del predicado es true en caso que se pudiera satisfacer esta equivalencia entre el stack y el string. En el String equivalente debe hacer uso del char ‘\n’ para los saltos de línea. No utilice los predicados write y/o display en el desarrollo de este predicado.
+Requisitos: - El string resultante al ser impreso por el predicado write o display debe ilustrar con claridad los elementos de un stack (i.e., preguntas con sus respuestas, usuarios, sus valoraciones, sesiones activas, etc.).
+	    - El resultado de aplicar stackToString directamente sobre stack sin usar función login de por medio, imprime todo el stack.
+	    - El resultado de aplicar stackToString con una sesión activa debe hacer que la unificación de la variable “StackStr” tenga solo las preguntas realizadas por el usuario con la sesión activa junto a los detalles de ese usuario.
+
+Encabezado: stackTostring(Stack, StackStr).
+
+PUNTAJE : 1
+////////////////////////
+/PREDICADOS OPCIONALES /  
+////////////////////////
+9. (2 pts) vote: Predicado que permite consultar el valor que toma un Stack al ocurrir un voto del usuario con sesión activa a una pregunta o respuesta. Para esto se ingresa un stack inicial, un TDA pregunta o respuesta, el voto que puede ser positivo o negativo y el Stack resultante luego de realizado el voto y sin la sesión activa del usuario que realizó el voto. Los puntajes a favor o en contra se  deben ajustar a las indicadas presentadas al comienzo de este enunciado. El retorno del predicado es true en caso que se pudo satisfacer el voto del usuario.
+
+Requisitos: - Para este predicado debe implementar dos predicados complementarios (getQuestion y getAnswer). Estos predicados se emplean para determinar el TDA pregunta o respuesta donde se aplica el voto.
+	    - El predicado complementario getQuestion permite obtener una pregunta en base a su ID. Por otro lado, getAnswer permite seleccionar la respuesta identificada con ID para una pregunta en base a su ID.  El predicado vote debe ser capaz de determinar si su segundo argumento corresponde a una pregunta o una respuesta.
+            - Debe retornar false si no existesesión activasi el voto va para una pregunta que no es del usuario que tiene sesión activa en el stack.
+Encabezado: vote(Stack, TdaPreguntaORespuesta, Voto, Stack).
+PUNTAJE: 0
+
+10.(2 pts) reportOffense: Predicado que permite consultar el valor que toma un Stack al reportar preguntas o respuestas que contengan contenido ofensivo. Este contenido puede encontrarse en preguntas o respuestas.  Para esto se ingresa un stack inicial, el TDA de pregunta o el TDA de respuesta que se desea reportar y el Stack resultante luego de reportar como ofensiva esta pregunta o respuesta. Además, el stack resultante debe tener el ajuste de puntaje asociado a reputación (en caso de que se hayan alcanzado 6 o más votos de ofensa, en cuyo caso se aplica descuento según indicaciones provistas al comienzo del enunciado) y se elimina la sesión activa del usuario en el stack.
+
+Requisitos: - Para este predicado debe implementar dos predicados  complementarios (getQuestion y getAnswer).
+            - El predicado complementario getQuestion permite obtener una pregunta en base a su ID. Por otro lado, getAnswer permite seleccionar la respuesta identificada con ID para una pregunta en base a su ID.
+
+Encabezado:reportOffense(Stack1, Question, Stack2).
+	   reportOffense(Stack1, Answer, Stack2).
+
+PUNTAJE: 0
+
+11.(2 pts) ranking: Predicado que permite consultar el valor que toma una lista con el ranking de las preguntas ordenadas según votación, pudiendo ser en orden ascendente (menos votado al más votado) o descendente (más votado al menos votado). El predicado se puede usar directamente sin tener una sesión activa en el Stack. 
+
+Requisitos:- Puede usar funciones de ordenamiento de listas que ya vienen implementadas en Prolog.
+Encabezado:ranking(Stack, Orden, PreguntasOrdenadas).
+
+PUNTAJE: 0
+
+12.(2 pts) search: Predicado que permite consultar el valor que toman dos listas al buscar por cierto texto en un stack. La primera lista esd con las preguntas en que se encontró el texto y la segunda lista es con las respuestas en que se encontró el texto. El predicado se puede usar directamente sin tener una sesión activa mediante login. 
+
+Requisitos:- Debe encontrar cualquier coincidencia en el cuerpo de todas las preguntas o respuestas. Si existe una coincidencia tanto en una pregunta como en una de las respuestas de la misma pregunta, entonces en la lista resultante debe estar tanto el TDA de la pregunta como el TDA de la respuesta encontrada.
+	   - El string que se busca puede contener cualquier carácter admitido en el texto de las preguntas o respuestas: Letras, números, espacios, puntos, comas, saltos de línea, etc.
+
+Encabezado:search(Stack, Texto, ListaPreguntas, ListaRespuestas).
+
+PUNTAJE: 0
