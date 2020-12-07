@@ -1,3 +1,94 @@
+%Nombre : Dyllan Salgado -Fecha: 06-12-2020 -Nombre profesor :Victor Flores.
+
+%Tipo de datos variables utilizadas.
+/*StackSalida=Representa nuestro stack.
+ Cabeza=Representa a la cabeza de una lista.
+ Cola=Representa la cola de una lista.
+ NombreUsuario= Dato tipo string que representa el nombre de un usuario.
+ PassUsuario= Dato tipo string que representa la pass de un usuario.
+ ReputacionUsuario= Dato tipo number que representa el puntaje de reputacion de un usuario.
+ IDPreguntas= Dato tipo number que se vincula con las preguntas realizadas.
+ FechaPreguntas= Dato tipo string que representa la fecha que se realizo una pregunta.
+ ContenidoPreguntas= Dato tipo string que representa lo que se ha preguntado.
+ Etiquetas= Lista de string que representa a palabras claves de nuestra pregunta.
+ AutorPregunta= Dato de tipo string que representa al autor de una pregunta.
+ RespondidaPreguntas= Dato tipo number que representa si una pregutna a sido respondida.
+ ID1Respuestas= Dato tipo number que representa al ID de una respuesta.
+ FechaRespuestas= Dato tipo string que representa la fecha en que se creo una respuesta.
+ ID2Respuestas= Dato tipo number que representa al ID de una respuesta
+ ContenidoRepuesta= Dato tipo string que representa lo que se ha respondido.
+ EtiquetasRepuestas= Lista de string que representa a palabras claves de nuestra respuesta.
+ AutorRespuesta= dato tipo string es quien creo la respuesta.
+ UsuarioS= lista de string con todos los usuarios registrados.
+ PreguntaS= lista de string con todas las preguntas.
+ Stack= Dato tipo lista que representa a nuestro stack.
+ Preguntas= dato tipo lista que es una pregunta.
+ Respuestas= dato tipo lista que es una respuesta.
+ Activo= dato tipo lista que representa a un usuario activo.
+ ID= dato tipo number que sirve para identificar respuestas o preguntas.
+ Fecha= dato tipo string que representa la fecha.
+ Contenido= dato tipo string que representa contenido de pregunta o respuesta.
+ Autor= tipo string quien genera o responde una pregunta.
+ Existe = dato de tipo booleano, es utilizado para ver si existe algo o no.
+ IDPreguntaStack = tipo number, y es utilizado para buscar el id dentro del stack.
+ IDRespuestaStack = tipo number y es utilizado para buscar el id dentro del stack.
+ Cantidad= tipo number, se utiliza para guardar la cantidad de preguntas o respuestas.
+*/
+%Predicados:
+/*
+ %Metas Primarias.
+ crearStack( StackSalida ). Aridad = 1.
+ pertenenciaUsuarios( [] ). Aridad=1.
+ pertenenciaPreguntas( [] ). Aridad=1.
+ pertenenciaRespuestas( [] ). Aridad=1.
+ pertenenciaUsuarioActivo( [] ). Aridad=1.
+ perteneceAStack( Stack ). Aridad=1.
+ obtenerUsuarioS( [ UsuarioS | _ ] , UsuarioS ). Aridad=2.
+ obtenerPreguntaS( [ _ , Preguntas , _ , _ ] , Preguntas). Aridad=2.
+ obtenerRespuestaS( [ _ , _ , Respuestas , _ ] , Respuestas ). Aridad=2.
+ obtenerActivo( [ _ , _ , _ , Activo ] , Activo ). Aridad=2.
+ obtenerIDPregunta( [ ID , _ , _ , _ , _ , _ ] , ID ). Aridad=2.
+ obtenerFechaPregunta( [ _ , Fecha , _ , _ , _ , _ ] , Fecha ). Aridad=2.
+ obtenerContenidoPregunta( [ _ , _ , Contenido , _ , _ , _ ] , Contenido ). Aridad=2.
+ obtenerEtiquetasPregunta( [ _ , _ , _ , Etiqueta , _ , _ ] , Etiqueta ). Aridad=2.
+ obtenerAutorPregunta( [ _ , _ , _ , _ , Autor , _ ] , Autor ). Aridad=2.
+ obtenerRespondidaPregunta( [ _ , _ , _ , _ , _ , Respondida ] , Respondida ). Aridad=2.
+ obtenerID1Respuesta( [ IDPreg , _ , _ , _ , _ , _ ] , IDPreg ).Aridad=2.
+ obtenerFechaRespuesta( [ _ , FechaResp , _ , _ , _ , _ ] , FechaResp ).Aridad=2.
+ obtenerID2Respuesta( [ _ , _ , IDResp , _ , _ , _ ] , IDResp ).Aridad=2.
+ obtenerContenidoRespuesta( [ _ , _ , _ , ContenidoResp , _ , _ ] , ContenidoResp ).Aridad=2.
+ obtenerEtiquetasRespuesta( [ _ , _ , _ , _ , EtiquetasResp , _ ] , EtiquetasResp ).Aridad=2.
+ obtenerAutorRespuesta( [ _ , _ , _ , _ , _ , AutorResp ] , AutorResp ).Aridad=2.
+ obtenerNombreActivo( [ Usuario , _ ] , Usuario ).Aridad=2.
+ obtenerPassActivo( [ _ , Password ] , Password ).Aridad=2.
+ existeUsuario( [] , _ , Existe). Aridad=3.
+ existePregunta( [] , _ , Existe). Aridad=3.
+ existeRespuesta( [] , _ , Existe ). Aridad=3.
+ contarPreguntasRespuestas( [ _ | Cola ] , Cantidad , Salida ). Aridad=3.
+ sacarUsuario( [] , NombreUsuario , Usuario ).Aridad=3.
+ sacarPass( [] , NombreUsuario , Pass ).Aridad=3.
+ sacarPregunta( [] , IDPregunta , Pregunta ).Aridad=3.
+ sacarRespuesta( [] , IDRespuesta , Respuesta ).Aridad=3.
+ preguntaNueva( [] , IdPregunta , Pregunta , Lista , Salida).Aridad=5.
+ usuariosNuevo([] , NombreUsuario , UsuarioNuevo , Lista , Salida).Aridad=5.
+ agregaUsuarios(Lista , [] , Salida).Aridad=3.
+ agregaPreguntas(Lista , [] , Salida).Aridad=3.
+ agregaRespuestas(Lista , [] , Salida).Aridad=3.
+ agregaUsuariosActivo(Lista , Usuario , Salida).Aridad=3.
+ filtroPreguntas([] , NombreUsuario , Lista , Salida).Aridad=4.
+ formatoListas(Lista , [] , Salida). Aridad=3.
+ listaString(String , [] , Salida). Aridad=3.
+
+ %Metas secundarias.
+ stackRegister(Stack , NombreUsuario , PassUsuario , Stack2). Aridad=4.
+ stackLogin(Stack , NombreUsuario , PassUsuario , Stack2). Aridad=4.
+ ask(Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2). Aridad=5.
+ answer(Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ). Aridad=6.
+ accept(Stack , IdPregunta , IdRespuesta , Stack2). Aridad=4.
+ stackToString(Stack , StackStr). Aridad=2.
+*/
+
+
 %TDA Stack
 % El stack tendra 4 listas, la primera sera la lista con los usuarios registrados, la 2da sera la lista con las preguntas, la 3ra sera la lista con respuestas y la ultima sera una lista con los datos del usuario activo.
 % [ [Usuarios] , [Preguntas] , [Respuestas] , [Activo] .
@@ -8,63 +99,6 @@
 % Descripcion: Crea la representacion del stack, usando listas vacias.
 % Ejemplo: crearStack(Stack1).
 crearStack( StackSalida ):- StackSalida = [ [] , [] , [] , [] ].
-
-%SELECTORES SE Encuentran primero que el de pertenencia porque son utilizados en ellos.
-% Entrada: El elemento que se quiere seleccionar
-% Salida: El elemento. 
-% Descripcion: El selector es utilizado para obtener datos dentro del stack.
-
-%Selectores Stack
-%obtiene todos los usuarios de la lista stack.
-obtenerUsuarioS( [ UsuarioS | _ ] , UsuarioS ).
-%obtiene todas las preguntas de la lista stack
-obtenerPreguntaS( [ _ , Preguntas , _ , _ ] , Preguntas).
-%obtiene todas las respuestas de la lista stack
-obtenerRespuestaS( [ _ , _ , Respuestas , _ ] , Respuestas ).
-%obtiene el usuario activo de la lista stack
-obtenerActivo( [ _ , _ , _ , Activo ] , Activo ).
-
-%Selectores Usuario
-%obtiene nombre de usuario.
-obtenerUsuario( [ NombreUsuario , _ , _ ] , NombreUsuario ).
-%obtiene contraseña de usuario.
-obtenerPassUsuario( [ _ , PassUsuario , _ ] , PassUsuario ).
-%obtiene reputacion de usuario
-obtenerReputacionUsuario( [ _ , _ , ReputacionUsuario ] , ReputacionUsuario ).
-
-%Selectores Preguntas
-%obtiene el ID de la pregunta.
-obtenerIDPregunta( [ ID , _ , _ , _ , _ , _ ] , ID ).
-%obtiene la fecha de la pregunta.
-obtenerFechaPregunta( [ _ , Fecha , _ , _ , _ , _ ] , Fecha ).
-%obtiene el contenido de la pregunta.
-obtenerContenidoPregunta( [ _ , _ , Contenido , _ , _ , _ ] , Contenido ).
-%obtiene las etiquetas de la pregunta.
-obtenerEtiquetasPregunta( [ _ , _ , _ , Etiqueta , _ , _ ] , Etiqueta ).
-%obtiene  al autor de la pregunta.
-obtenerAutorPregunta( [ _ , _ , _ , _ , Autor , _ ] , Autor ).
-%obtiene si la pregunta esta respondida.
-obtenerRespondidaPregunta( [ _ , _ , _ , _ , _ , Respondida ] , Respondida ).
-
-%Selectores Respuestas
-%obtiene el ID de la pregunta asociada.
-obtenerID1Respuesta( [ IDPreg , _ , _ , _ , _ , _ ] , IDPreg ).
-%obtiene la fecha de la respuesta.
-obtenerFechaRespuesta( [ _ , FechaResp , _ , _ , _ , _ ] , FechaResp ).
-%obtiene el ID de la respuesta.
-obtenerID2Respuesta( [ _ , _ , IDResp , _ , _ , _ ] , IDResp ).
-%obtiene las contenido de la respuesta.
-obtenerContenidoRespuesta( [ _ , _ , _ , ContenidoResp , _ , _ ] , ContenidoResp ).
-%obtiene las etiquetas de la respuesta
-obtenerEtiquetasRespuesta( [ _ , _ , _ , _ , EtiquetasResp , _ ] , EtiquetasResp ).
-%obtiene  al autor de la respueta.
-obtenerAutorRespuesta( [ _ , _ , _ , _ , _ , AutorResp ] , AutorResp ).
-
-%Selectores Usuario Activo
-%obtiene nombre de usuario activo.
-obtenerNombreActivo( [ Usuario , _ ] , Usuario ).
-%obtiene contraseña de usuario.
-obtenerPassActivo( [ _ , Password ] , Password ).
 
 %PERTENENCIA
 %Pertenencia Usuario.
@@ -122,6 +156,63 @@ perteneceAStack( Stack ):- obtenerUsuarioS( Stack , UsuarioS ) , pertenenciaUsua
 	obtenerRespuestaS( Stack , RespuestaS ) , pertenenciaRespuestas( RespuestaS ) ,
 	obtenerActivo( Stack , UsuarioActivo ) , pertenenciaUsuarioActivo( UsuarioActivo ).
 
+%SELECTORES
+% Entrada: El elemento que se quiere seleccionar
+% Salida: El elemento. 
+% Descripcion: El selector es utilizado para obtener datos dentro del stack.
+
+%Selectores Stack
+%obtiene todos los usuarios de la lista stack.
+obtenerUsuarioS( [ UsuarioS | _ ] , UsuarioS ).
+%obtiene todas las preguntas de la lista stack
+obtenerPreguntaS( [ _ , Preguntas , _ , _ ] , Preguntas).
+%obtiene todas las respuestas de la lista stack
+obtenerRespuestaS( [ _ , _ , Respuestas , _ ] , Respuestas ).
+%obtiene el usuario activo de la lista stack
+obtenerActivo( [ _ , _ , _ , Activo ] , Activo ).
+
+%Selectores Usuario
+%obtiene nombre de usuario.
+obtenerUsuario( [ NombreUsuario , _ , _ ] , NombreUsuario ).
+%obtiene contraseña de usuario.
+obtenerPassUsuario( [ _ , PassUsuario , _ ] , PassUsuario ).
+%obtiene reputacion de usuario
+obtenerReputacionUsuario( [ _ , _ , ReputacionUsuario ] , ReputacionUsuario ).
+
+%Selectores Preguntas
+%obtiene el ID de la pregunta.
+obtenerIDPregunta( [ ID , _ , _ , _ , _ , _ ] , ID ).
+%obtiene la fecha de la pregunta.
+obtenerFechaPregunta( [ _ , Fecha , _ , _ , _ , _ ] , Fecha ).
+%obtiene el contenido de la pregunta.
+obtenerContenidoPregunta( [ _ , _ , Contenido , _ , _ , _ ] , Contenido ).
+%obtiene las etiquetas de la pregunta.
+obtenerEtiquetasPregunta( [ _ , _ , _ , Etiqueta , _ , _ ] , Etiqueta ).
+%obtiene  al autor de la pregunta.
+obtenerAutorPregunta( [ _ , _ , _ , _ , Autor , _ ] , Autor ).
+%obtiene si la pregunta esta respondida.
+obtenerRespondidaPregunta( [ _ , _ , _ , _ , _ , Respondida ] , Respondida ).
+
+%Selectores Respuestas
+%obtiene el ID de la pregunta asociada.
+obtenerID1Respuesta( [ IDPreg , _ , _ , _ , _ , _ ] , IDPreg ).
+%obtiene la fecha de la respuesta.
+obtenerFechaRespuesta( [ _ , FechaResp , _ , _ , _ , _ ] , FechaResp ).
+%obtiene el ID de la respuesta.
+obtenerID2Respuesta( [ _ , _ , IDResp , _ , _ , _ ] , IDResp ).
+%obtiene las contenido de la respuesta.
+obtenerContenidoRespuesta( [ _ , _ , _ , ContenidoResp , _ , _ ] , ContenidoResp ).
+%obtiene las etiquetas de la respuesta
+obtenerEtiquetasRespuesta( [ _ , _ , _ , _ , EtiquetasResp , _ ] , EtiquetasResp ).
+%obtiene  al autor de la respueta.
+obtenerAutorRespuesta( [ _ , _ , _ , _ , _ , AutorResp ] , AutorResp ).
+
+%Selectores Usuario Activo
+%obtiene nombre de usuario activo.
+obtenerNombreActivo( [ Usuario , _ ] , Usuario ).
+%obtiene contraseña de usuario.
+obtenerPassActivo( [ _ , Password ] , Password ).
+
 %PREDICADOS ADICIONALES
 
 %existeUsuario
@@ -143,12 +234,12 @@ existeUsuario( [ Cabeza | Cola ] , NombreUsuario , Existe ):-obtenerUsuario( Cab
 % Ejemplo: existePregunta([ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] , [ 2 , "02-12-2020" , "pregunta2" , [ "pregunta" , "pregunta2"] , "Salgado" , 0 ]], 1 ,Existe).
 % existePregunta([ [ 1 , "01-12-2020" , "pregunta1" , [ "pregunta" , "pregunta1"] , "Dyllan" , 0 ] , [ 2 , "02-12-2020" , "pregunta2" , [ "pregunta" , "pregunta2"] , "Salgado" , 0 ]], 3 ,Existe).
 existePregunta( [] , _ , Existe ):- Existe = false.
-existePregunta( [ Cabeza | _ ] , IDPreguntaRespuesta , Existe ):-
+existePregunta( [ Cabeza | _ ] , IDPregunta, Existe ):-
 	obtenerIDPregunta( Cabeza , IDPreguntaStack ) , 
-	IDPreguntaRespuesta == IDPreguntaStack , Existe = true.
-existePregunta( [ Cabeza | Cola ] , IDPreguntaRespuesta , Existe ):-
+	IDPregunta == IDPreguntaStack , Existe = true.
+existePregunta( [ Cabeza | Cola ] , IDPregunta , Existe ):-
 	obtenerIDPregunta( Cabeza , IDPreguntaStack ) , 
-	not( IDPreguntaRespuesta == IDPreguntaStack ) , existePregunta( Cola , IDPreguntaRespuesta , Existe ).
+	not( IDPregunta == IDPreguntaStack ) , existePregunta( Cola , IDPregunta , Existe ).
 
 %existeRespuesta
 % Entrada: Respuesta
@@ -394,33 +485,73 @@ answer( Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ):
 % Descripcion: Predicado que nos permite aceptar respuestas de preguntas, solo el usuario que genera pregunta puede aceptar las respuestas.
 %caso cuando no se encuentra una sesion activa.
 accept( Stack , _ , _ , Stack2 ):-obtenerActivo( Stack , Activo ),Activo == [],Stack2 = false,!,fail.
+
 %caso cuando la pregunta no existe, tira false.
 accept( Stack , IdPregunta , _ , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == false,!,fail.
+
 %caso cuando el usuario activo trata de aceptar una respuesta de pregunta que no le pertenece, entrega falso.	
 accept( Stack , IdPregunta , _ , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
 	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
 	not( NombreActivo == AutorPregunta ),!,fail.
+
 %caso cuando la respuesta no existe, entrega un  falso.
 accept( Stack , IdPregunta , IdRespuesta , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
 	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
 	NombreActivo == AutorPregunta,obtenerRespuestaS( Stack , Respuestas ),
 	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == false,!,fail.
+	
+%caso cuando la id de pregunta asociada de la respuesta no corresponde a pregunta que se quiere responder.
+accept( Stack , IdPregunta , IdRespuesta , _ ):-
+	obtenerActivo( Stack , Activo ),
+	not( Activo == [] ),
+	obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta ,ExistePregunta ),
+	ExistePregunta == true,
+	obtenerNombreActivo( Activo , NombreActivo ),
+	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), 
+	obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
+	NombreActivo == AutorPregunta,
+	obtenerRespuestaS( Stack , Respuestas ),
+	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),
+	ExisteRespuesta == true,
+	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),
+	obtenerID1Respuesta( RespuestaRespondedor , IDPreguntaAsociada),
+	not(IDPreguntaAsociada == IdPregunta),
+	!, fail.
 %caso cuando la respuesta esta respondida, pero el usuario que responde no se encuentra registrado.
-accept( Stack , IdPregunta , IdRespuesta , _ ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
-	existePregunta( Preguntas , IdPregunta ,ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
-	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
-	NombreActivo == AutorPregunta,obtenerRespuestaS( Stack , Respuestas ),existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),
-	ExisteRespuesta == true,sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),
-	obtenerUsuarioS( Stack , Usuarios ),existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == false,!,fail.
+accept( Stack , IdPregunta , IdRespuesta , _ ):-
+	obtenerActivo( Stack , Activo ),
+	not( Activo == [] ),
+	obtenerPreguntaS( Stack , Preguntas ),
+	existePregunta( Preguntas , IdPregunta ,ExistePregunta ),
+	ExistePregunta == true,
+	obtenerNombreActivo( Activo , NombreActivo ),
+	sacarPregunta( Preguntas , IdPregunta , PreguntaLogueado ), 
+	obtenerAutorPregunta( PreguntaLogueado , AutorPregunta ) , 
+	NombreActivo == AutorPregunta,
+	obtenerRespuestaS( Stack , Respuestas ),
+	existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),
+	ExisteRespuesta == true,
+	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),
+	obtenerID1Respuesta( RespuestaRespondedor , IDPreguntaAsociada),
+	IDPreguntaAsociada == IdPregunta,
+	obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),
+	obtenerUsuarioS( Stack , Usuarios ),
+	existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),
+	ExisteRespondedor == false,
+	!,fail.
+
 %caso bonito cuando todo existe da el puntaje al usuario que responde y acepta la respuesta.
 accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-obtenerActivo( Stack , Activo ),not( Activo == [] ),obtenerPreguntaS( Stack , Preguntas ),
 	existePregunta( Preguntas , IdPregunta , ExistePregunta ),ExistePregunta == true,obtenerNombreActivo( Activo , NombreActivo ),
 	sacarPregunta( Preguntas , IdPregunta , PreguntaAutor ), obtenerAutorPregunta( PreguntaAutor , AutorPregunta ) , NombreActivo == AutorPregunta,
 	obtenerRespuestaS( Stack , Respuestas ),existeRespuesta( Respuestas , IdRespuesta , ExisteRespuesta ),ExisteRespuesta == true,
-	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),obtenerUsuarioS( Stack , Usuarios ),
+	sacarRespuesta( Respuestas , IdRespuesta , RespuestaRespondedor ),obtenerAutorRespuesta( RespuestaRespondedor , AutorRespuesta ),
+	obtenerID1Respuesta( RespuestaRespondedor , IDPreguntaAsociada), IDPreguntaAsociada == IdPregunta,
+	obtenerUsuarioS( Stack , Usuarios ),
 	existeUsuario( Usuarios , AutorRespuesta , ExisteRespondedor ),ExisteRespondedor == true,!,sacarUsuario( Usuarios , AutorRespuesta , UsuarioRespondedor ),
 	obtenerPassUsuario( UsuarioRespondedor , PassRespondedor ),obtenerReputacionUsuario( UsuarioRespondedor , ReputacionRespondedor ),
 	ReputacionNueva is ( ReputacionRespondedor + 15 ),UsuarioRespondedorNuevo = [ AutorRespuesta , PassRespondedor , ReputacionNueva ],
@@ -442,16 +573,16 @@ accept( Stack , IdPregunta , IdRespuesta , Stack2 ):-obtenerActivo( Stack , Acti
 stackToString( Stack , StackStr ):-
 	perteneceAStack( Stack ),
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerRespuestaS( Stack , Respuestas ) , obtenerActivo( Stack , UsuarioActivo ),UsuarioActivo == [],
-	append( [] , ["USUARIOS REGISTRADOS"] , Salida1 ) ,
-	agregaUsuarios( Salida1 , Autores , Salida2 ) , append( Salida2 , ["\n"] , Salida3 ), 
-	append( Salida3 , ["PREGUNTAS DEL STACK"] , Salida4 ) , append( Salida4 , ["\n"] , Salida5 ),
-	agregaPreguntas( Salida5 , Preguntas , Salida6 ) , append( Salida6 , ["\n"] , Salida7 ), 
-	append( Salida7 , ["RESPUESTAS DEL STACK"] , Salida8 ) , append( Salida8 , ["\n"] , Salida9 ),
-	agregaRespuestas( Salida9 , Respuestas , Salida10 ) , append( Salida10 , ["\n"] , Salida11 ), 
-	append( Salida11 , ["USUARIO CON SESION INICIADA"] , Salida12 ) , append( Salida12 , ["\n"] , Salida13 ),
-	append( Salida13 , ["NO SE ENCUENTRA USUARIO CON SESION INICIADA"] , Salida14 ),
-	formatoListas( [] , Salida14 , Salida15 ),
-	atomics_to_string( Salida15 , StackAsString ),
+	append( [] , ["USUARIOS REGISTRADOS"] , Salida1 ) , append( Salida1 , ["\n"] , Salida2 ), 
+	agregaUsuarios( Salida2 , Autores , Salida3 ) , append( Salida3 , ["\n"] , Salida4 ), 
+	append( Salida4 , ["PREGUNTAS DEL STACK"] , Salida5 ) , append( Salida5 , ["\n"] , Salida6 ),append( Salida6 , ["\n"] , Salida7 ), 
+	agregaPreguntas( Salida7 , Preguntas , Salida8 ) , append( Salida8 , ["\n"] , Salida9 ), 
+	append( Salida9 , ["RESPUESTAS DEL STACK"] , Salida10 ) , append( Salida10 , ["\n"] , Salida11 ),append( Salida11 , ["\n"] , Salida12 ), 
+	agregaRespuestas( Salida12 , Respuestas , Salida13 ) , append( Salida13 , ["\n"] , Salida14 ), 
+	append( Salida14 , ["USUARIO CON SESION INICIADA"] , Salida15 ) , append( Salida15 , ["\n"] , Salida16 ),append( Salida16 , ["\n"] , Salida17 ), 
+	append( Salida17 , ["NO SE ENCUENTRA USUARIO CON SESION INICIADA"] , Salida18 ),
+	formatoListas( [] , Salida18 , Salida19 ),
+	atomics_to_string( Salida19 , StackAsString ),
 	StackStr = StackAsString.
 %Si existe un usuario activo, solo se mostraran las preguntas del usuario y si esta respondida o no.
 stackToString( Stack , StackStr ):-
@@ -459,14 +590,16 @@ stackToString( Stack , StackStr ):-
 	obtenerUsuarioS( Stack , Autores ) , obtenerPreguntaS( Stack , Preguntas ) , obtenerActivo( Stack , UsuarioActivo ),
 	not( UsuarioActivo == [] ), obtenerNombreActivo( UsuarioActivo , NombreActivo ),
 	filtroPreguntas( Preguntas , NombreActivo , [] , PreguntasFiltradas ),
-	append( [] , ["USUARIOS REGISTRADOS"] , Salida1 ) ,
-	agregaUsuarios( Salida1 , Autores , Salida3 ) , append( Salida3 , ["\n"] , Salida4 ), 
-	append( Salida4 , ["PREGUNTAS DEL STACK"] , Salida5 ) , append( Salida5 , ["\n"] , Salida6 ),
-	agregaPreguntas( Salida6 , PreguntasFiltradas , Salida7 ) , append( Salida7 , ["\n"] , Salida8 ),
-	append( Salida8 , ["USUARIO CON SESION INICIADA"] , Salida9) , append( Salida9, ["\n"] , Salida10 ),
-	agregaUsuariosActivo( Salida10 , UsuarioActivo , Salida11 ) ,
-	formatoListas( [] , Salida11 , Salida12 ),
-	atomics_to_string(Salida12, StackAsString),
+	append( [] , ["USUARIOS REGISTRADOS"] , Salida1 ) , append( Salida1 , ['\n'] , Salida3),
+	sacarUsuario( Autores , NombreActivo , UsuarioActivoStack ),
+	ListaConUsuario = ( [ UsuarioActivoStack ] ),
+	agregaUsuarios( Salida3 , ListaConUsuario , Salida4 ),	append( Salida4 , ["\n"] , Salida5 ), append( Salida5 , ["\n"] , Salida6 ), 
+	append( Salida6 , ["PREGUNTAS DEL STACK"] , Salida7 ) , append( Salida7 , ["\n"] , Salida8 ),append( Salida8 , ["\n"] , Salida9 ), 
+	agregaPreguntas( Salida9 , PreguntasFiltradas , Salida10 ) , append( Salida10 , ["\n"] , Salida11 ),append( Salida11 , ["\n"] , Salida12 ), 
+	append( Salida12 , ["USUARIO CON SESION INICIADA"] , Salida13 ) , append( Salida13, ["\n"] , Salida14 ),append( Salida14, ["\n"] , Salida15 ),
+	agregaUsuariosActivo( Salida15 , UsuarioActivo , Salida16 ) ,
+	formatoListas( [] , Salida16 , Salida17 ),
+	atomics_to_string( Salida17, StackAsString),
 	StackStr = StackAsString.
 
 %EJEMPLOS:
@@ -539,7 +672,7 @@ stackToString( Stack , StackStr ):-
 	%Con sesion activa.
 	%stack2(X), stackRegister(X,"SoyNuevoEnStack","123",Stack2),stackLogin(Stack2,"SoyNuevoEnStack","123",Stack3),ask(Stack3,"04-12-2020","preguntita",["prolog","C"],Stack4),stackLogin(Stack4,"Salgado","456",Stack5),accept(Stack5,2,1,Stack6),stackLogin(Stack6,"Dyllan","123",Stack7),stackToString(Stack7,StackStr).
 
-%Crando Stack desde 0.
+%Creando Stack desde 0.
 %Se crea el stack.
 	%crearStack(Stack).
 %Registramos a un usuario en el Stack.
