@@ -37,6 +37,14 @@
 %Predicados:
 /*
  %Metas Primarias.
+  stackRegister(Stack , NombreUsuario , PassUsuario , Stack2). Aridad=4.
+ stackLogin(Stack , NombreUsuario , PassUsuario , Stack2). Aridad=4.
+ ask(Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2). Aridad=5.
+ answer(Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ). Aridad=6.
+ accept(Stack , IdPregunta , IdRespuesta , Stack2). Aridad=4.
+ stackToString(Stack , StackStr). Aridad=2.
+
+ %Metas secundarias.
  crearStack( StackSalida ). Aridad = 1.
  pertenenciaUsuarios( [] ). Aridad=1.
  pertenenciaPreguntas( [] ). Aridad=1.
@@ -79,13 +87,6 @@
  formatoListas(Lista , [] , Salida). Aridad=3.
  listaString(String , [] , Salida). Aridad=3.
 
- %Metas secundarias.
- stackRegister(Stack , NombreUsuario , PassUsuario , Stack2). Aridad=4.
- stackLogin(Stack , NombreUsuario , PassUsuario , Stack2). Aridad=4.
- ask(Stack , Fecha , TextoPregunta , ListaEtiquetas , Stack2). Aridad=5.
- answer(Stack , Fecha , IdPregunta , TextoRespuesta , ListaEtiquetas , Stack2 ). Aridad=6.
- accept(Stack , IdPregunta , IdRespuesta , Stack2). Aridad=4.
- stackToString(Stack , StackStr). Aridad=2.
 */
 
 
